@@ -74,10 +74,4 @@ html {
   }
 }
 
-@media (max-width: 280px) {
-  .container {
-    @apply min-w-[280px] overflow-auto;
-  }
-}
-
 
