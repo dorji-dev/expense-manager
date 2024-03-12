@@ -12,7 +12,7 @@ const SiteHeader = () => {
   )[0];
 
   return (
-    <header className="sticky container h-[56px] flex justify-between items-center top-0 z-50 w-full border-b-[2px] border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky container h-[60px] flex justify-between items-center top-0 z-50 w-full border-b-[2px] border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <Link href="/" className="flex items-center">
         <FaMoneyCheckDollar className="mr-[12px]" />
         <span className="font-[600]">SpendWise</span>
