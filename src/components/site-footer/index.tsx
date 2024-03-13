@@ -34,18 +34,21 @@ const SiteFooter = () => {
         <div className="flex space-x-[20px]">
           <Link
             href="/"
+            aria-label="Twitter"
             className="flex justify-center items-center border rounded-full p-[10px] hover:border-foreground transition-colors duration-300"
           >
             <BsTwitterX />
           </Link>
           <Link
             href="/"
+            aria-label="Facebook"
             className="flex justify-center items-center border rounded-full p-[10px] hover:border-foreground transition-colors duration-300"
           >
             <SlSocialFacebook />
           </Link>
           <Link
             href="/"
+            aria-label="Instagram"
             className="flex justify-center items-center border rounded-full p-[10px] hover:border-foreground transition-colors duration-300"
           >
             <SlSocialInstagram />
