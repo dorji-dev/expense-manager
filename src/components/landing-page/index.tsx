@@ -9,10 +9,10 @@ const LandingPage = () => {
       <div className="bg-[url('/images/app_landing.jpg')] bg-center pt-[100px] pb-[20px] md:pb-[40px] bg-cover rounded-[12px] px-[20px] md:px-[40px]">
         <div className="h-full flex flex-col justify-end">
           <div className="space-y-[20px]">
-            <h2 className="text-white font-[700]">
+            <h2 className="text-white font-extrabold">
               SpendWise helps you spend smarter and save more.
             </h2>
-            <p className="text-white text-[18px] font-[200]">
+            <p className="text-white text-[18px] font-extralight">
               Understanding your spending habits, track recurring expenses, and
               set budgets to meet your financial goals. Whether you're saving
               for a big purchase or just want to be more mindful of your
@@ -28,10 +28,10 @@ const LandingPage = () => {
         </div>
       </div>
       <div className="space-y-[10px] mt-[50px]">
-        <h3 className="font-[900]">
+        <h3 className="font-bold">
           Features to help you take control of your finances
         </h3>
-        <p className="text-[18px] font-[300] lg:max-w-[70%]">
+        <p className="text-[18px] font-light lg:max-w-[70%]">
           SpendWise's powerful suite of tools makes it easy to understand your
           spending habits and make more informed decisions. Whether you are
           saving for a big purchase or just want to be more mindful of your
@@ -49,6 +49,7 @@ const LandingPage = () => {
                 blurDataURL={grayBlurDataValue}
                 alt="Tracking image"
                 className="rounded-[12px] object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             </div>
             <div>

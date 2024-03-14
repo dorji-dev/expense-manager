@@ -1,3 +1,6 @@
+import { BsTwitterX } from "react-icons/bs";
+import { SlSocialFacebook, SlSocialInstagram } from "react-icons/sl";
+
 export const LANDING_PAGE_FEATURES = [
   {
     image: "/images/track.jpg",
@@ -22,5 +25,23 @@ export const LANDING_PAGE_FEATURES = [
     title: "Easily sync your accounts",
     description:
       "Connect all your bank accounts in one place for a comprehensive view of your finances.",
+  },
+];
+
+export const SocialLinks = [
+  {
+    name: "Twitter",
+    icon: BsTwitterX,
+    href: "/",
+  },
+  {
+    name: "Facebook",
+    icon: SlSocialFacebook,
+    href: "/",
+  },
+  {
+    name: "Instagram",
+    icon: SlSocialInstagram,
+    href: "/",
   },
 ];
