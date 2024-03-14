@@ -6,12 +6,12 @@ import { grayBlurDataValue } from "@/lib/utils";
 const LandingPage = () => {
   return (
     <>
-      <div className="bg-[url('/images/app_landing.jpg')] bg-center md:h-[400px] bg-cover rounded-[12px] p-[40px]">
+      <div className="bg-[url('/images/app_landing.jpg')] bg-center pt-[100px] pb-[20px] md:pb-[40px] bg-cover rounded-[12px] px-[20px] md:px-[40px]">
         <div className="h-full flex flex-col justify-end">
           <div className="space-y-[20px]">
-            <h1 className="text-[36px] text-white font-[700] md:text-[48px]">
+            <h2 className="text-white font-[700]">
               SpendWise helps you spend smarter and save more.
-            </h1>
+            </h2>
             <p className="text-white text-[18px] font-[200]">
               Understanding your spending habits, track recurring expenses, and
               set budgets to meet your financial goals. Whether you're saving
@@ -28,9 +28,9 @@ const LandingPage = () => {
         </div>
       </div>
       <div className="space-y-[10px] mt-[50px]">
-        <h2 className="text-[34px] font-[900]">
+        <h3 className="font-[900]">
           Features to help you take control of your finances
-        </h2>
+        </h3>
         <p className="text-[18px] font-[300] lg:max-w-[70%]">
           SpendWise's powerful suite of tools makes it easy to understand your
           spending habits and make more informed decisions. Whether you are
@@ -52,7 +52,7 @@ const LandingPage = () => {
               />
             </div>
             <div>
-              <h4 className="text-[16px]">{feature.title}</h4>
+              <p className="text-[16px]">{feature.title}</p>
               <p className="text-foreground/60">{feature.description}</p>
             </div>
           </div>

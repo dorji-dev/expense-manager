@@ -5,26 +5,49 @@ export const NAVIGATION_CONFIG: NavigationConfigModel = [
     title: "Features",
     href: "/",
     type: "default",
+    private: false,
   },
   {
     title: "Pricing",
     href: "/",
     type: "default",
+    private: false,
   },
   {
     title: "Resources",
     href: "/",
     type: "default",
+    private: false,
   },
   {
     title: "Log In",
     href: "/",
     type: "secondary",
+    private: false,
   },
   {
     title: "Sign Up",
     href: "/",
     type: "primary",
+    private: false,
+  },
+  {
+    title: "New report",
+    href: "/",
+    type: "primary",
+    private: true,
+  },
+  {
+    title: "Categories",
+    href: "/",
+    type: "default",
+    private: true,
+  },
+  {
+    title: "Settings",
+    href: "/",
+    type: "default",
+    private: true,
   },
 ];
 

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "../stylesheets/styles.scss";
 import SiteHeader from "@/components/site-header";
 import SiteFooter from "@/components/site-footer";
 
@@ -21,7 +21,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="flex flex-col">
           <SiteHeader />
-          <div className="container grow my-[30px] md:mx-auto lg:w-[80%]">{children}</div>
+          <div className="container grow my-[30px] md:mx-auto lg:w-[80%]">
+            {children}
+          </div>
           <SiteFooter />
         </div>
       </body>
