@@ -26,13 +26,15 @@ const MobileNav = () => {
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="pr-0 pt-[36px]">
-        <Link
-          href="/"
-          className="mr-[24px] flex items-center space-x-2"
-          onClick={() => setOpen(false)}
-        >
-          <Link href={loginNav.href} className={buttonVariants({variant: "secondary"})}>{loginNav.title}</Link>
-        </Link>
+        <div className="mr-[24px] flex items-center space-x-2">
+          <Link
+            href={loginNav.href}
+            className={buttonVariants({ variant: "secondary" })}
+            onClick={() => setOpen(false)}
+          >
+            {loginNav.title}
+          </Link>
+        </div>
         <ScrollArea className="my-[16px] h-[calc(100dvh-8rem)] pb-[40px] pr-[20px]">
           <nav className="flex flex-col space-y-[16px]">
             {defaultNavs.map((nav) => (
