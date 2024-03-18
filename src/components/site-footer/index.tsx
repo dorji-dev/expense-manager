@@ -13,7 +13,7 @@ const SiteFooter = () => {
         <div className="mb-[20px] md:mr-[40px] md:grow">
           <Link href="/" className="flex flex-col max-w-max">
             <FaMoneyCheckDollar className="mr-[12px] text-[60px] md:text-[40px]" />
-            <span className="font-[600] text-[40px] md:text-[30px]">
+            <span className="font-bold text-[40px] md:text-[30px]">
               SpendWise
             </span>
             <p className="text-foreground/40">Finance at your control.</p>

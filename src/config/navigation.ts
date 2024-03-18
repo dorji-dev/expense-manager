@@ -20,22 +20,10 @@ export const NAVIGATION_CONFIG: NavigationConfigModel = [
     private: false,
   },
   {
-    title: "Log In",
-    href: "/",
-    type: "secondary",
-    private: false,
-  },
-  {
     title: "Sign Up",
     href: "/",
     type: "primary",
     private: false,
-  },
-  {
-    title: "New report",
-    href: "/",
-    type: "primary",
-    private: true,
   },
   {
     title: "Categories",
