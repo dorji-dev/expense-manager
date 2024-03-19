@@ -1,11 +1,11 @@
 import Link from "next/link";
 import SignUpForm from "./sign-up-form";
-import clsx from "clsx";
 import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const SignUp = () => {
   return (
-    <div className="mt-[100px] max-w-[400px] px-[20px] xs:px-0 mx-auto">
+    <div className="auth_form_container">
       <div className="mb-[20px]">
         <h4 className="font-bold">Create an account</h4>
       </div>
@@ -18,7 +18,7 @@ const SignUp = () => {
         </p>
         <Link
           href="/"
-          className={clsx(buttonVariants({ variant: "secondary" }), "w-full")}
+          className={cn(buttonVariants({ variant: "secondary" }), "w-full")}
         >
           Sign in
         </Link>

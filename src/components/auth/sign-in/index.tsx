@@ -1,11 +1,11 @@
 import Link from "next/link";
 import SignInForm from "./sign-in-form";
 import { buttonVariants } from "@/components/ui/button";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 
 const SignIn = () => {
   return (
-    <div className="mt-[100px] max-w-[400px] px-[20px] xs:px-0 mx-auto">
+    <div className="auth_form_container">
       <div className="space-y-[20px]">
         <h4 className="font-bold">Welcome back to SpendWise</h4>
         <p>Log in to your account to track your spending and save more.</p>
@@ -19,10 +19,10 @@ const SignIn = () => {
         </p>
         <Link
           href="/"
-          className={clsx(buttonVariants({ variant: "secondary" }), "w-full")}
+          className={cn(buttonVariants({ variant: "secondary" }), "w-full")}
         >
-          Sign up
-        </Link>
+          Sign up 
+        </Link>  
       </div>
     </div>
   );

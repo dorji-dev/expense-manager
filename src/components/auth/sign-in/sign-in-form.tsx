@@ -28,7 +28,7 @@ const SignInForm = () => {
       </div>
       <Link
         href="/"
-        className="underline text-muted-foreground text-[13px] mt-[16px] block"
+        className="underline text-muted-foreground text-[12px] mt-[16px] block"
       >
         Forgot your password?
       </Link>
