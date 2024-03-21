@@ -48,7 +48,7 @@ const AddNewExpenseForm = () => {
       <label className="block font-medium">
         Amount <Input type="text" placeholder="e.g. 5" className="mt-[8px]" />
       </label>
-      <label className="block font-medium mb-[8px]">
+      <label className="block font-medium">
         Notes{" "}
         <Textarea
           placeholder="Add optional details"
