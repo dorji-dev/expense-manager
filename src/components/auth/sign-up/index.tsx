@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 const SignUp = () => {
   return (
-    <div className="auth_form_container">
+    <div className="form_wrapper">
       <div className="mb-[20px]">
         <h4 className="font-bold">Create an account</h4>
       </div>
