@@ -20,7 +20,7 @@ const AddNewExpenseForm = () => {
     <form className="space-y-[20px]">
       <div>
         <span className="block font-medium mb-[8px]">Date</span>
-        <DatePickerSingle selected={date} onSelect={setDate} />
+        <DatePickerSingle selected={date} onSelect={setDate} placeholder="Select date" />
       </div>
       <label className="block font-medium">
         Item{" "}

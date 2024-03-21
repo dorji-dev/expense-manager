@@ -16,7 +16,9 @@ import {
 } from "react-day-picker";
 import { IoCalendarOutline } from "react-icons/io5";
 
-type DatePickerSingleProps = Omit<DayPickerSingleProps, "mode">;
+type DatePickerSingleProps = Omit<DayPickerSingleProps, "mode"> & {
+  placeholder: string;
+};
 
 /**
  * Single date picker
@@ -25,12 +27,13 @@ export function DatePickerSingle({
   selected,
   className,
   onSelect,
+  placeholder,
   ...props
 }: DatePickerSingleProps) {
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const onDateSelect: SelectSingleEventHandler = (...args) => {
     onSelect && onSelect(...args);
-    triggerRef.current?.click()
+    triggerRef.current?.click();
   };
 
   return (
@@ -46,7 +49,7 @@ export function DatePickerSingle({
             ref={triggerRef}
           >
             <IoCalendarOutline className="mr-[8px] h-[16px] w-[16px]" />
-            {selected ? format(selected, "PPP") : <span>Pick a date</span>}
+            {selected ? format(selected, "PPP") : <span>{placeholder}</span>}
           </Button>
         </PopoverTrigger>
         <PopoverContent align="start" className=" w-auto p-0">
