@@ -14,7 +14,7 @@ export const expenseListColumns: ColumnDef<Expense>[] = [
         className="flex items-center h-full"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-        Item
+        Date
         <RxCaretSort className="ml-2 h-4 w-4" />
       </button>
     ),
