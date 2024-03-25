@@ -6,8 +6,6 @@ export default function Index() {
   return (
     <main>
       <LandingPage />
-      <SignIn />
-      <SignUp/>
     </main>
   );
 }

@@ -9,7 +9,6 @@ const AuthRedirect = ({ children }: React.PropsWithChildren) => {
   const router = useRouter();
   const { user, isloading } = useAuth() as AuthContextProps;
   const pathName = usePathname();
-  console.log(user);
   useEffect(() => {
     if (
       !isloading &&
@@ -29,7 +28,7 @@ const AuthRedirect = ({ children }: React.PropsWithChildren) => {
   }, [user, isloading]);
 
   if (
-    isloading ||
+    (isloading && pathName !== "/") ||
     (!user && !publicRoutes.includes(pathName) && pathName !== "/") ||
     (user && publicRoutes.includes(pathName) && pathName !== "/")
   )
@@ -39,9 +38,7 @@ const AuthRedirect = ({ children }: React.PropsWithChildren) => {
       </div>
     );
 
-  return (
-    <div className='flex justify-center items-center h-screen'> {children}</div>
-  );
+  return children;
 };
 
 export default AuthRedirect;

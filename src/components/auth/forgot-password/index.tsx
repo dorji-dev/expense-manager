@@ -7,9 +7,7 @@ import { Button } from "../../ui/button";
 import Link from "next/link";
 
 const ForgotPassword = () => {
-  const handleSubmit = () => {
-    console.log("handle submit");
-  };
+  const handleSubmit = () => {};
   return (
     <div className='auth_form_container'>
       <div className='space-y-[20px]'>

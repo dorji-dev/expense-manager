@@ -1,27 +1,23 @@
 import Link from "next/link";
 import SignUpForm from "./sign-up-form";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { buttonVariants } from '@/components/ui/button';
 
 const SignUp = () => {
   return (
-    <div className="auth_form_container">
-      <div className="mb-[20px]">
-        <h4 className="font-bold">Create an account</h4>
+    <div className='auth_form_container'>
+      <div className='mb-[20px]'>
+        <h4 className='font-bold'>Create an account</h4>
       </div>
-      <div className="mt-[20px]">
+      <div className='mt-[20px]'>
         <SignUpForm />
       </div>
-      <div className="mt-[24px] space-y-[20px]">
-        <p className="text-muted-foreground text-center">
+      <div className='mt-[24px] space-y-[20px]'>
+        <div className='text-muted-foreground text-center'>
           Already have an account?
-        </p>
-        <Link
-          href="/"
-          className={cn(buttonVariants({ variant: "secondary" }), "w-full")}
-        >
-          Sign in
-        </Link>
+          <Link className='text-primary ml-[4px]' href='/login'>
+            Sign in
+          </Link>
+        </div>
       </div>
     </div>
   );

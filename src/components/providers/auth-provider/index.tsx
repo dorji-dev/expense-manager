@@ -79,7 +79,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const checkUserStatus = async () => {
     try {
       let accountDetails = await account.get();
-      console.log(accountDetails);
       setUser(accountDetails);
     } catch (error) {
       console.error("ERROR", error);
@@ -94,8 +93,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     registerUser,
     isloading,
   };
-
-  console.log({ contextData });
 
   return (
     <AuthContext.Provider value={contextData}>{children}</AuthContext.Provider>

@@ -6,18 +6,19 @@ import { AuthContextProps, useAuth } from "../providers/auth-provider";
 
 const DesktopNav = () => {
   const desktopNav = NAVIGATION_CONFIG.filter((nav) => nav.type === "default");
-  // const { user, logoutUser  = useAuth() as AuthContextProps;
-  const authContext = useAuth() as AuthContextProps;
-  console.log(authContext);
-  return (
-    <nav className='hidden md:block space-x-[20px]'>
-      {desktopNav.map((nav) => (
-        <Link href={nav.href} key={nav.title}>
-          {nav.title}
-        </Link>
-      ))}
-    </nav>
-  );
+const { user, isloading } = useAuth() as AuthContextProps;
+if (isloading) {
+  return <div>test loading ....</div>;
+}
+return (
+  <nav className='hidden md:block space-x-[20px]'>
+    {desktopNav.map((nav) => (
+      <Link href={nav.href} key={nav.title}>
+        {nav.title}
+      </Link>
+    ))}
+  </nav>
+);
 };
 
 export default DesktopNav;

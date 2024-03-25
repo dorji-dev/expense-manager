@@ -40,5 +40,10 @@ h6 {
 }
 
 .auth_form_container {
-  @apply max-w-[400px] px-[20px] xs:px-0 mx-auto;
+  @apply max-w-[500px] px-[20px] xs:px-0 mx-auto;
+}
+
+
+.error{
+  @apply text-red-500 text-[12px] pl-[8px] pt-[4px];
 }
