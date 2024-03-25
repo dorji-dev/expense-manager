@@ -8,14 +8,22 @@ import { Form, Field } from "react-final-form";
 import { FormValidators } from "../../../lib/validationSchema";
 import { NewUser } from "../../../lib/types/config";
 import { AuthContextProps, useAuth } from "../../providers/auth-provider";
+import { toast } from "../../ui/use-toast";
 
 const SignUpForm = () => {
   const router = useRouter();
   const { registerUser } = useAuth() as AuthContextProps;
 
   const handleSignup = async (value: NewUser) => {
-    registerUser(value.email, value.password, value.name);
-    router.push("/login");
+  await registerUser(value.email, value.password, value.name)
+    .then(() => {
+      router.push("/login");
+    })
+    .catch((error) => {
+      toast({
+        description: error.response.message,
+      });
+    });
   };
 
   return (

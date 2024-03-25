@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import Link from 'next/link';
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   AuthContextProps,
@@ -12,14 +12,21 @@ import {
 import { Form, Field } from "react-final-form";
 import { FormValidators } from "../../../lib/validationSchema";
 import { LoginUser } from "../../../lib/types/config";
+import { toast } from "../../ui/use-toast";
 
 const SignInForm = () => {
   const router = useRouter();
   const { loginUser } = useAuth() as AuthContextProps;
   const handleLogin = async (value: LoginUser) => {
-    loginUser(value.email, value.password).then(() => {
-      router.push("/");
-    });
+    await loginUser(value.email, value.password)
+      .then(() => {
+        router.push("/");
+      })
+      .catch((error) => {
+        toast({
+          description: error.response.message,
+        });
+      });
   };
 
   return (
@@ -103,4 +110,3 @@ export default SignInForm;
 function loginUser(userInfo: { email: string; password: string }) {
   throw new Error("Function not implemented.");
 }
-

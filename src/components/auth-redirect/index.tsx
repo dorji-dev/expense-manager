@@ -3,7 +3,12 @@ import React, { useEffect } from "react";
 import { AuthContextProps, useAuth } from "../providers/auth-provider";
 import { usePathname, useRouter } from "next/navigation";
 
-const publicRoutes = ["/login", "/register", "/forgot-password"];
+const publicRoutes = [
+  "/login",
+  "/register",
+  "/forgot-password",
+  "/reset-password",
+];
 
 const AuthRedirect = ({ children }: React.PropsWithChildren) => {
   const router = useRouter();

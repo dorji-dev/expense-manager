@@ -3,7 +3,7 @@ import SignIn from '../../../components/auth/sign-in';
 
 export default function Page() {
   return (
-    <div>
+    <div className='auth_container'>
       <SignIn />
     </div>
   );

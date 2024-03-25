@@ -19,6 +19,12 @@ export interface AuthContextProps {
     username: string
   ) => Promise<void>;
   isloading: boolean;
+  forgotPassword: (email: string) => Promise<void>;
+  resetPassword: (
+    userId: string,
+    secret: string,
+    password: string
+  ) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextProps | null>(null);
@@ -34,15 +40,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const loginUser = async (email: string, password: string) => {
-    setIsloading(true);
     try {
-      await account.createEmailPasswordSession(email, password);
+      await account.createEmailSession(email, password);
       let accountDetails = await account.get();
       setUser(accountDetails);
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      return Promise.reject(error);
     }
-    setIsloading(false);
   };
 
   const logoutUser = async () => {
@@ -55,26 +59,38 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     password: string,
     username: string
   ) => {
-    setIsloading(true);
     try {
       await account.create(ID.unique(), email, password, username);
-      await account.createEmailPasswordSession(email, password);
+      await account.createEmailSession(email, password);
       let accountDetails = await account.get();
       setUser(accountDetails);
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      return Promise.reject(error);
     }
-
-    setIsloading(false);
   };
 
-  // const forgotPassword = async () => {
-  //   try {
-  //     account.createRecovery("email@example.com", "https://example.com");
-  //   } catch (error) {
-  //     console.error("ERROR", error);
-  //   }
-  // };
+  const forgotPassword = async (email: string) => {
+    try {
+      await account.createRecovery(
+        email,
+        "http://localhost:3000/reset-password"
+      );
+    } catch (error: any) {
+      return Promise.reject(error);
+    }
+  };
+
+  const resetPassword = async (
+    userId: string,
+    secret: string,
+    password: string
+  ) => {
+    try {
+      await account.updateRecovery(userId, secret, password, password);
+    } catch (error: any) {
+      return Promise.reject(error);
+    }
+  };
 
   const checkUserStatus = async () => {
     try {
@@ -92,6 +108,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     logoutUser,
     registerUser,
     isloading,
+    forgotPassword,
+    resetPassword,
   };
 
   return (

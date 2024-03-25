@@ -5,9 +5,24 @@ import { Input } from "../../ui/input";
 import { FormValidators } from "../../../lib/validationSchema";
 import { Button } from "../../ui/button";
 import Link from "next/link";
+import { AuthContextProps, useAuth } from "../../providers/auth-provider";
+import { toast } from "../../ui/use-toast";
 
 const ForgotPassword = () => {
-  const handleSubmit = () => {};
+  const { forgotPassword } = useAuth() as AuthContextProps;
+  const handleSubmit = async (formData: { email: string }) => {
+    await forgotPassword(formData.email)
+      .then(() => {
+        toast({
+          description: "Successful",
+        });
+      })
+      .catch((error) => {
+        toast({
+          description: error.response.message,
+        });
+      });
+  };
   return (
     <div className='auth_form_container'>
       <div className='space-y-[20px]'>
@@ -55,7 +70,7 @@ const ForgotPassword = () => {
           }}
         </Form>
         <Link className='mt-[10px] flex justify-end text-primary' href='/login'>
-          back to login
+          Back to login
         </Link>
       </div>
     </div>

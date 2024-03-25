@@ -32,7 +32,7 @@ export abstract class FormValidators {
    */
   static minLength(min: number) {
     return (value: string | any[]) =>
-      (value?.length ?? 0) < min ? "Name is too short" : undefined;
+      (value?.length ?? 0) < min ? "Rrequired atleast 8 digits" : undefined;
   }
   /**
    * Checks if a value has a maximum length.
@@ -42,7 +42,7 @@ export abstract class FormValidators {
 
   static maxLength(max: number) {
     return (value: string | any[]) =>
-      (value?.length ?? 0) > max ? "Name is too long" : undefined;
+      (value?.length ?? 0) > max ? "Rrequired atleast 8 digits" : undefined;
   }
 
   /**

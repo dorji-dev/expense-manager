@@ -1,10 +1,13 @@
+"use client";
 import { LANDING_PAGE_FEATURES } from "@/lib/constants/misc";
-import { Button } from "../ui/button";
 import Image from "next/image";
 import { cn, grayBlurDataValue } from "@/lib/utils";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import { AuthContextProps, useAuth } from "../providers/auth-provider";
 const LandingPage = () => {
+  const { user } = useAuth() as AuthContextProps;
+
   return (
     <>
       <div className="bg-[url('/images/app_landing.jpg')] bg-center pt-[100px] pb-[20px] md:pb-[40px] bg-cover rounded-[12px] px-[20px] md:px-[40px]">
@@ -20,23 +23,36 @@ const LandingPage = () => {
               spending, SpendWise has you covered.
             </p>
             <div className='flex flex-col space-y-[20px] xs:flex-row xs:space-y-0 xs:space-x-[20px] !mt-[40px]'>
-              <Link
-                href='/login'
-                className={cn(buttonVariants({ variant: "default" }))}
-              >
-                Login
-              </Link>
-              <Link
-                href='/register'
-                className={cn(buttonVariants({ variant: "secondary" }))}
-              >
-                Sign up
-              </Link>
+              {user ? (
+                <>
+                  <Link
+                    href='#exploreID'
+                    className={cn(buttonVariants({ variant: "default" }))}
+                  >
+                    Explore
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href='/login'
+                    className={cn(buttonVariants({ variant: "default" }))}
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    href='/register'
+                    className={cn(buttonVariants({ variant: "secondary" }))}
+                  >
+                    Sign up
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
       </div>
-      <div className='space-y-[10px] mt-[50px]'>
+      <div className='space-y-[10px] mt-[50px]' id='exploreID'>
         <h3 className='font-bold'>
           Features to help you take control of your finances
         </h3>

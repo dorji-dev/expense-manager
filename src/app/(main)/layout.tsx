@@ -5,6 +5,7 @@ import SiteHeader from '@/components/site-header';
 import SiteFooter from '@/components/site-footer';
 import { AuthProvider } from "../../components/providers/auth-provider";
 import AuthRedirect from "@/components/auth-redirect";
+import { Toaster } from "../../components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ export default function RootLayout({
               <SiteHeader />
               <div className='container grow my-[30px] md:mx-auto lg:w-[80%]'>
                 {children}
+                <Toaster />
               </div>
               <SiteFooter />
             </div>
