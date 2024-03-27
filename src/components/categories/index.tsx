@@ -3,7 +3,7 @@ import CategoryListing from "./category-listing";
 
 const ExpenseCategories = () => {
   return (
-    <div className="space-y-[16px] max-w-[500px] mx-auto mt-[100px]">
+    <div className="space-y-[16px] max-w-[500px] mx-auto">
       <h5 className="font-bold">Categorize your expenses</h5>
       <p>Add or edit your expense categories.</p>
       <CategoryListing />
