@@ -4,7 +4,7 @@ import ExpenseListTable from "./list-table";
 
 const ExpenseListing = () => {
   return (
-    <div className="space-y-[30px]">
+    <div className="space-y-[30px] mt-[100px]">
       <ExpenseListFilter />
       <ExpenseListTable />
     </div>
