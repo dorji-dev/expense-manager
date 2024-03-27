@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { RefObject } from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/misc";
 
 interface DataTableProps<TData> {
   table: ReactTable<TData>;
