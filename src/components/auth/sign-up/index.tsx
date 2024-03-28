@@ -1,6 +1,6 @@
 import Link from "next/link";
 import SignUpForm from "./sign-up-form";
-import { buttonVariants } from '@/components/ui/button';
+import { buttonVariants } from "@/components/ui/button";
 
 const SignUp = () => {
   return (

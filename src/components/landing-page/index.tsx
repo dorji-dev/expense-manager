@@ -1,7 +1,7 @@
 "use client";
 import { LANDING_PAGE_FEATURES } from "@/lib/constants/misc";
 import Image from "next/image";
-import { cn, grayBlurDataValue } from "@/lib/utils";
+import { cn, grayBlurDataValue } from "@/lib/utils/misc";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { AuthContextProps, useAuth } from "../providers/auth-provider";

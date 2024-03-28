@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <AuthProvider>
           <AuthRedirect>
-            <div className='flex flex-col'>
+            <div className='flex flex-col min-h-screen'>
               <SiteHeader />
               <div className='container grow my-[30px] md:mx-auto lg:w-[80%]'>
                 {children}

@@ -1,9 +1,5 @@
-import AddNewExpense from "@/components/add-new-expense";
+// import AddNewExpense from "@/components/add-new-expense";
 
-export default function Index() {
-  return (
-    <main>
-      <AddNewExpense />;
-    </main>
-  );
+export default function Page() {
+  return <main>{/* <AddNewExpense />; */}</main>;
 }

@@ -7,7 +7,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/misc";
 import { format } from "date-fns";
 import { useRef } from "react";
 import {

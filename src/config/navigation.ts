@@ -15,7 +15,7 @@ export const NAVIGATION_CONFIG: NavigationConfigModel = [
   },
   {
     title: "Expenses",
-    href: "/",
+    href: "/expenses",
     type: "default",
     private: true,
   },
@@ -27,20 +27,13 @@ export const NAVIGATION_CONFIG: NavigationConfigModel = [
   },
   {
     title: "Categories",
-    href: "/category",
+    href: "/expense-category",
     type: "default",
     private: true,
   },
   {
     title: "Settings",
     href: "/setting",
-    type: "default",
-    private: true,
-  },
-
-  {
-    title: "Add new",
-    href: "/add-new-expense",
     type: "default",
     private: true,
   },
