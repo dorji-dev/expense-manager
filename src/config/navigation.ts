@@ -2,22 +2,22 @@ import { FooterNavLinks, NavigationConfigModel } from "@/lib/types/config";
 
 export const NAVIGATION_CONFIG: NavigationConfigModel = [
   {
-    title: "Features",
+    title: "Home",
     href: "/",
     type: "default",
     private: false,
   },
   {
-    title: "Pricing",
-    href: "/",
+    title: "Reports",
+    href: "/reports",
     type: "default",
-    private: false,
+    private: true,
   },
   {
-    title: "Resources",
+    title: "Expenses",
     href: "/",
     type: "default",
-    private: false,
+    private: true,
   },
   {
     title: "Sign Up",
@@ -27,13 +27,20 @@ export const NAVIGATION_CONFIG: NavigationConfigModel = [
   },
   {
     title: "Categories",
-    href: "/",
+    href: "/category",
     type: "default",
     private: true,
   },
   {
     title: "Settings",
-    href: "/",
+    href: "/setting",
+    type: "default",
+    private: true,
+  },
+
+  {
+    title: "Add new",
+    href: "/add-new-expense",
     type: "default",
     private: true,
   },

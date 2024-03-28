@@ -18,6 +18,7 @@ import { IoCalendarOutline } from "react-icons/io5";
 
 type DatePickerSingleProps = Omit<DayPickerSingleProps, "mode"> & {
   placeholder: string;
+  errorMessage: string;
 };
 
 /**
@@ -48,15 +49,15 @@ export function DatePickerSingle({
             )}
             ref={triggerRef}
           >
-            <IoCalendarOutline className="mr-[8px] h-[16px] w-[16px]" />
+            <IoCalendarOutline className='mr-[8px] h-[16px] w-[16px]' />
             {selected ? format(selected, "PPP") : <span>{placeholder}</span>}
           </Button>
         </PopoverTrigger>
-        <PopoverContent align="start" className=" w-auto p-0">
+        <PopoverContent align='start' className=' w-auto p-0'>
           <Calendar
             defaultMonth={selected}
-            mode="single"
-            captionLayout="dropdown-buttons"
+            mode='single'
+            captionLayout='dropdown-buttons'
             selected={selected}
             fromYear={1960}
             toYear={2030}
@@ -65,6 +66,7 @@ export function DatePickerSingle({
           />
         </PopoverContent>
       </Popover>
+      <p className='error'>{props?.errorMessage}</p>
     </div>
   );
 }
