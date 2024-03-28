@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/misc";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import { DayPicker, DropdownProps } from "react-day-picker";
 

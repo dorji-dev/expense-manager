@@ -13,7 +13,7 @@ import {
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 
-const AddNewExpenseForm = () => {
+const ExpenseForm = () => {
   const [date, setDate] = useState<Date>();
 
   return (
@@ -62,4 +62,4 @@ const AddNewExpenseForm = () => {
   );
 };
 
-export default AddNewExpenseForm;
+export default ExpenseForm;
