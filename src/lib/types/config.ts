@@ -12,3 +12,19 @@ export type FooterNavLinks = {
     href: string;
   }[];
 }[];
+
+
+export type NewUser = {
+  name: string;
+  email: string;
+  password: string;
+  confirmpassword: string;
+  terms?: boolean;
+};
+
+export type LoginUser = {
+  email: string;
+  password: string;
+  terms?: boolean;
+};
+
