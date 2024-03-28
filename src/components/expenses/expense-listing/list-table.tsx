@@ -99,14 +99,14 @@ const ExpenseListTable = () => {
           <DropdownMenuTrigger asChild>
             <Button
               variant="outline"
-              className="text-[14px] rounded-md font-normal"
+              className="rounded-md font-normal"
             >
-              Toggle columns <GoChevronDown className="ml-2 h-4 w-4" />
+              Toggle columns <GoChevronDown className="ml-[8px] h-[16px] w-[16px]" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             align="end"
-            className="text-[14px] w-dropdown-trigger-width"
+            className="w-dropdown-trigger-width"
           >
             {table
               .getAllColumns()
