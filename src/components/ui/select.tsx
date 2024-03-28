@@ -6,7 +6,7 @@ import { IoMdCheckmark } from "react-icons/io";
 import { RxCaretSort } from "react-icons/rx";
 import * as SelectPrimitive from "@radix-ui/react-select";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/misc";
 
 const Select = SelectPrimitive.Root;
 

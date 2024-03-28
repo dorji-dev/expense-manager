@@ -70,6 +70,9 @@ const config = {
       screens: {
         xs: "480px",
         xxs: "360px"
+      },
+      width: {
+        "dropdown-trigger-width": "var(--radix-dropdown-menu-trigger-width)"
       }
     },
   },

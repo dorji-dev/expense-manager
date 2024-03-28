@@ -1,7 +1,7 @@
 import { LANDING_PAGE_FEATURES } from "@/lib/constants/misc";
 import { Button } from "../ui/button";
 import Image from "next/image";
-import { grayBlurDataValue } from "@/lib/utils";
+import { grayBlurDataValue } from "@/lib/utils/misc";
 
 const LandingPage = () => {
   return (
