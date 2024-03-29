@@ -13,69 +13,18 @@ import {
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { Field, Form } from "react-final-form";
+import { Category } from "../../lib/types/config";
 
 const ExpenseForm = () => {
   const [date, setDate] = useState<Date>();
-  const handleOnSubmitExpense = (selected: string) => console.log(selected); // TODO: implement
-
+  const handleOnSubmitExpense = (value: Category) => {
+    console.log(value);
+  };
   return (
     <Form onSubmit={handleOnSubmitExpense}>
-      {({ handleSubmit, values }) => {
+      {({ handleSubmit }) => {
         return (
-          // <form onSubmit={handleSubmit}>
-          //   <div className='space-y-[20px]'>
-          //     <label className='block font-medium'>
-          //       Password
-          //       <Field
-          //         name='password'
-          //         type='password'
-          //         placeholder='Enter your password'
-          //         validate={FormValidators.compose(
-          //           FormValidators.minLength(8)
-          //         )}
-          //       >
-          //         {({ input, meta }) => (
-          //           <Input
-          //             {...input}
-          //             className='mt-[8px]'
-          //             errorMessage={
-          //               meta?.touched && meta?.error ? meta.error : ""
-          //             }
-          //           />
-          //         )}
-          //       </Field>
-          //     </label>
-
-          //     <label className='block font-medium'>
-          //       Confirm Password
-          //       <Field
-          //         name='confirmpassword'
-          //         type='password'
-          //         placeholder='Confirm your password'
-          //         validate={(value) => {
-          //           if (value !== values.password) {
-          //             return "Password do not match!";
-          //           }
-          //         }}
-          //       >
-          //         {({ input, meta }) => (
-          //           <Input
-          //             {...input}
-          //             className='mt-[8px]'
-          //             errorMessage={
-          //               meta?.touched && meta?.error ? meta.error : ""
-          //             }
-          //           />
-          //         )}
-          //       </Field>
-          //     </label>
-          //   </div>
-
-          //   <Button type='submit' className='w-full mt-[20px]'>
-          //     Reset password
-          //   </Button>
-          // </form>
-          <form className='space-y-[20px]'>
+          <form onSubmit={handleSubmit} className='space-y-[20px]'>
             <div>
               <span className='block font-medium mb-[8px]'>Date</span>
               <Field name='date'>
@@ -110,31 +59,53 @@ const ExpenseForm = () => {
             </label>
             <div>
               <span className='block font-medium mb-[8px]'>Category</span>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder='Select a category' />
-                </SelectTrigger>
-                <SelectContent>
-                  {["Food", "Transportation", "Rent", "Games"].map(
-                    (category) => (
-                      <SelectItem value={category} key={category}>
-                        {category}
-                      </SelectItem>
-                    )
-                  )}
-                </SelectContent>
-              </Select>
+              <Field name='category'>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder='Select a category' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {["Food", "Transportation", "Rent", "Games"].map(
+                      (category) => (
+                        <SelectItem value={category} key={category}>
+                          {category}
+                        </SelectItem>
+                      )
+                    )}
+                  </SelectContent>
+                </Select>
+              </Field>
             </div>
             <label className='block font-medium'>
-              Amount{" "}
-              <Input type='text' placeholder='e.g. 5' className='mt-[8px]' />
+              Amount
+              <Field name='amount'>
+                {({ input, meta }) => (
+                  <Input
+                    {...input}
+                    errorMessage={
+                      meta?.touched && meta?.error ? meta.error : ""
+                    }
+                    type='text'
+                    placeholder='e.g. 5'
+                    className='mt-[8px]'
+                  />
+                )}
+              </Field>
             </label>
             <label className='block font-medium'>
-              Notes{" "}
-              <Textarea
-                placeholder='Add optional details'
-                className='mt-[8px] font-normal'
-              />
+              Notes
+              <Field name='amount'>
+                {({ input, meta }) => (
+                  <Textarea
+                    {...input}
+                    errorMessage={
+                      meta?.touched && meta?.error ? meta.error : ""
+                    }
+                    placeholder='Add optional details'
+                    className='mt-[8px] font-normal'
+                  />
+                )}
+              </Field>
             </label>
             <Button type='submit' className='w-full'>
               Save

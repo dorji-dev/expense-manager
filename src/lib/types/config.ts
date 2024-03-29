@@ -28,8 +28,8 @@ export type LoginUser = {
   terms?: boolean;
 };
 
-export type Category{
-  icon?: string;
-  name?: string;
+export type Category = {
+  iconName?: string;
+  categoryName?: string;
   amount?: number;
-}
+};
