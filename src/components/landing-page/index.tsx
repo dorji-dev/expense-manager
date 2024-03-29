@@ -5,9 +5,10 @@ import { cn, grayBlurDataValue } from "@/lib/utils/misc";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { AuthContextProps, useAuth } from "../providers/auth-provider";
+import { Skeleton } from "../ui/skeleton";
 const LandingPage = () => {
-  const { user } = useAuth() as AuthContextProps;
-
+  const { user, isloading } = useAuth() as AuthContextProps;
+  if (isloading) return <Skeleton className='h-[415px] w-full' />;
   return (
     <>
       <div className="bg-[url('/images/app_landing.jpg')] bg-center pt-[100px] pb-[20px] md:pb-[40px] bg-cover rounded-[12px] px-[20px] md:px-[40px]">

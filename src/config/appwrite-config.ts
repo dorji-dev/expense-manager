@@ -8,6 +8,7 @@ export const collectionId = process.env
 import { Client, Account, Databases } from "appwrite";
 
 export const client = new Client();
+export const databases = new Databases(client);
 
 
 client.setEndpoint(endpoint).setProject(projectId);

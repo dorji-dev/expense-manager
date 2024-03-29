@@ -11,10 +11,10 @@ import {
 
 const CategoryForm = () => {
   return (
-    <form className="space-y-[16px]">
-      <label className="block font-medium">
-        Category name{" "}
-        <Input type="text" placeholder="Category name" className="mt-[8px]" />
+    <form className='space-y-[16px]'>
+      <label className='block font-medium'>
+        Category name
+        <Input type='text' placeholder='Category name' className='mt-[8px]' />
       </label>
       <label className="block font-medium">
         Budget <Input type="text" placeholder="Budget" className="mt-[8px]" />

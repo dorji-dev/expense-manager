@@ -48,11 +48,7 @@ export const FOOTER_NAV_LINKS: FooterNavLinks = [
         href: "/",
       },
       {
-        title: "About Us",
-        href: "/",
-      },
-      {
-        title: "Sitemap",
+        title: "Contact Us",
         href: "/",
       },
     ],
@@ -77,10 +73,6 @@ export const FOOTER_NAV_LINKS: FooterNavLinks = [
   {
     title: "More",
     nav: [
-      {
-        title: "Contact Us",
-        href: "/",
-      },
       {
         title: "Affiliates",
         href: "/",

@@ -4,12 +4,17 @@ import Link from "next/link";
 import React from "react";
 import { AuthContextProps, useAuth } from "../providers/auth-provider";
 import { Button } from "../ui/button";
+import Loader from "../loader";
 
 const DesktopNav = () => {
   const desktopNav = NAVIGATION_CONFIG.filter((nav) => nav.type === "default");
   const { user, isloading, logoutUser } = useAuth() as AuthContextProps;
   if (isloading) {
-    return <div>loading ....</div>;
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
   }
 
   const privateNavItems = desktopNav.filter((nav) => nav.private);
