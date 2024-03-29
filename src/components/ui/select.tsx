@@ -115,8 +115,10 @@ SelectLabel.displayName = SelectPrimitive.Label.displayName;
 
 const SelectItem = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
->(({ className, children, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item> & {
+    showIndicator?: boolean;
+  }
+>(({ className, children, showIndicator = true, ...props }, ref) => (
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
@@ -125,11 +127,13 @@ const SelectItem = React.forwardRef<
     )}
     {...props}
   >
-    <span className="absolute right-[8px] flex h-[14px] w-[14px] items-center justify-center">
-      <SelectPrimitive.ItemIndicator>
-        <IoMdCheckmark className="h-[16px] w-[16px]" />
-      </SelectPrimitive.ItemIndicator>
-    </span>
+    {showIndicator && (
+      <span className="absolute right-[8px] flex h-[14px] w-[14px] items-center justify-center">
+        <SelectPrimitive.ItemIndicator>
+          <IoMdCheckmark className="h-[16px] w-[16px]" />
+        </SelectPrimitive.ItemIndicator>
+      </span>
+    )}
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
   </SelectPrimitive.Item>
 ));
