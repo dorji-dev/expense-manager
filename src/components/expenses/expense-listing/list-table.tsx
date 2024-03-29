@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { GoChevronDown } from "react-icons/go";
-import Link from "next/link";
+import AddNewExpenseDialog from "../add-new-expense-dialog";
 
 const expenses: Expense[] = [
   {
@@ -95,15 +95,16 @@ const ExpenseListTable = () => {
 
   return (
     <div>
-      <div className='mb-[8px] max-w-max ml-auto'>
+      <div className="mb-[8px] space-x-[12px] max-w-max ml-auto">
+        <AddNewExpenseDialog />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant='outline' className='rounded-md font-normal'>
+            <Button variant="outline" className="rounded-[10px] font-normal">
               Toggle columns{" "}
-              <GoChevronDown className='ml-[8px] h-[16px] w-[16px]' />
+              <GoChevronDown className="ml-[8px] h-[16px] w-[16px]" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align='end' className='w-dropdown-trigger-width'>
+          <DropdownMenuContent align="end" className="w-dropdown-trigger-width">
             {table
               .getAllColumns()
               .filter((column) => column.getCanHide())
