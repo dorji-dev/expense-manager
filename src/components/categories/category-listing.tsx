@@ -1,17 +1,5 @@
-import {
-  IoFastFoodOutline,
-  IoCarSportOutline,
-  IoHomeOutline,
-} from "react-icons/io5";
+import { CategoryIconNames, CATEGORY_ICON_MAPPING } from "@/lib/constants/icon-mapping";
 import CategoryAction from "./category-action";
-
-type CategoryIconNames = "food" | "transportation" | "rent";
-
-const ICON_MAPPING = {
-  food: IoFastFoodOutline,
-  transportation: IoCarSportOutline,
-  rent: IoHomeOutline,
-};
 
 const categories = [
   {
@@ -25,9 +13,9 @@ const categories = [
     icon: "transportation",
   },
   {
-    name: "Rent",
+    name: "Housing",
     budget: 500,
-    icon: "rent",
+    icon: "housing",
   },
 ];
 
@@ -35,7 +23,7 @@ const CategoryListing = () => {
   return (
     <div className="space-y-[20px]">
       {categories.map((category) => {
-        const CategoryIcon = ICON_MAPPING[category.icon as CategoryIconNames];
+        const CategoryIcon = CATEGORY_ICON_MAPPING[category.icon as CategoryIconNames];
         return (
           <div
             key={category.name}

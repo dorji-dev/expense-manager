@@ -72,7 +72,8 @@ const config = {
         xxs: "360px"
       },
       width: {
-        "dropdown-trigger-width": "var(--radix-dropdown-menu-trigger-width)"
+        "dropdown-trigger-width": "var(--radix-dropdown-menu-trigger-width)",
+        "select-trigger-width": "var(--radix-select-trigger-width)"
       }
     },
   },
