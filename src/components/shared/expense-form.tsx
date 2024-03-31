@@ -59,22 +59,22 @@ const ExpenseForm = () => {
             </label>
             <div>
               <span className='block font-medium mb-[8px]'>Category</span>
-              <Field name='category'>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder='Select a category' />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {["Food", "Transportation", "Rent", "Games"].map(
-                      (category) => (
-                        <SelectItem value={category} key={category}>
-                          {category}
-                        </SelectItem>
-                      )
-                    )}
-                  </SelectContent>
-                </Select>
-              </Field>
+              {/* <Field name='category'> */}
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder='Select a category' />
+                </SelectTrigger>
+                <SelectContent>
+                  {["Food", "Transportation", "Rent", "Games"].map(
+                    (category) => (
+                      <SelectItem value={category} key={category}>
+                        {category}
+                      </SelectItem>
+                    )
+                  )}
+                </SelectContent>
+              </Select>
+              {/* </Field> */}
             </div>
             <label className='block font-medium'>
               Amount

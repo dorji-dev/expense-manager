@@ -10,26 +10,33 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Field, Form } from "react-final-form";
-import { Category } from "../../lib/types/config";
-import { createCategory } from "../providers/database";
+import { Category } from "@/lib/types/config";
+import { FormValidators } from "@/lib/validationSchema";
 
-const CategoryForm = () => {
-  const handleOnAddCategory = async (values: Category) => {
-    console.log("add category", values);
-    await createCategory({
-      categoryName: values.categoryName,
-      iconName: values.iconName,
-      amount: values.amount,
-    });
-  };
+interface CategoryFormProps {
+  onSubmit: (values: Category, form: any) => Promise<void>;
+  submitButtonLabel: string;
+  initialData?: Category;
+}
+
+const CategoryForm = ({
+  initialData,
+  submitButtonLabel,
+  onSubmit,
+}: CategoryFormProps) => {
+  console.log(initialData);
+
   return (
-    <Form onSubmit={handleOnAddCategory}>
+    <Form onSubmit={onSubmit} initialValues={initialData}>
       {({ handleSubmit, form }) => {
         return (
           <form onSubmit={handleSubmit} className='space-y-[16px]'>
             <label className='block font-medium'>
               Category name
-              <Field name='categoryName'>
+              <Field
+                name='categoryName'
+                validate={FormValidators.compose(FormValidators.required)}
+              >
                 {({ input, meta }) => (
                   <Input
                     {...input}
@@ -45,7 +52,13 @@ const CategoryForm = () => {
             </label>
             <label className='block font-medium'>
               Budget
-              <Field name='amount'>
+              <Field
+                name='amount'
+                validate={FormValidators.compose(
+                  FormValidators.required,
+                  FormValidators.minLength(4)
+                )}
+              >
                 {({ input, meta }) => (
                   <Input
                     {...input}
@@ -61,12 +74,16 @@ const CategoryForm = () => {
             </label>
             <div>
               <span className='block mb-[8px] font-medium'>Icon</span>
-              <Field name='iconName'>
+              <Field
+                name='iconName'
+                validate={FormValidators.compose(FormValidators.required)}
+              >
                 {() => (
                   <Select
                     onValueChange={(iconValue) =>
                       form.change("iconName", iconValue)
                     }
+                    defaultValue={initialData?.iconName ?? ""}
                   >
                     <SelectTrigger className='h-[48px]'>
                       <SelectValue placeholder='Select icon' />
@@ -95,7 +112,7 @@ const CategoryForm = () => {
               </Field>
             </div>
             <Button type='submit' className='w-full'>
-              Add
+              {submitButtonLabel}
             </Button>
           </form>
         );
