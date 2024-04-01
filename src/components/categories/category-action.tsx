@@ -13,6 +13,8 @@ import { useState } from "react";
 import DeleteCategory from "./delete-category";
 import CategoryForm from "./category-form";
 import { Category } from "../../lib/types/config";
+import { DeleteCategoryById, UpdateCategoryById } from "../providers/database";
+import { toast } from "../ui/use-toast";
 
 interface CategoryActionProps {
   initialData: Category;
@@ -21,6 +23,32 @@ interface CategoryActionProps {
 const CategoryAction = ({ initialData }: CategoryActionProps) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  const handleOnEdit = async (values: Category) => {
+    try {
+      await UpdateCategoryById(initialData.$id, values).then(() => {
+        toast({
+          description: "Updated category successfully",
+        });
+      });
+    } catch (error: any) {
+      toast({
+        description: error.response.message,
+      });
+    }
+  };
+  const handleOnDelete = async () => {
+    try {
+      await DeleteCategoryById(initialData.$id).then(() => {
+        toast({
+          description: "Delete successfull",
+        });
+      });
+    } catch (error: any) {
+      toast({
+        description: error.response.message,
+      });
+    }
+  };
   return (
     <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
       <DropdownMenuTrigger asChild>
@@ -34,7 +62,9 @@ const CategoryAction = ({ initialData }: CategoryActionProps) => {
           <DialogTrigger asChild>
             <DropdownMenuItem
               className='cursor-pointer'
-              onSelect={(e) => e.preventDefault()}
+              onSelect={(e) => {
+                e.preventDefault();
+              }}
             >
               Edit
             </DropdownMenuItem>
@@ -42,7 +72,7 @@ const CategoryAction = ({ initialData }: CategoryActionProps) => {
           <DialogContent className=''>
             <h6 className='text-[16px] text-muted-foreground'>Edit category</h6>
             <CategoryForm
-              onSubmit={async () => {}}
+              onSubmit={handleOnEdit}
               initialData={initialData}
               submitButtonLabel='Update'
             />
@@ -58,7 +88,7 @@ const CategoryAction = ({ initialData }: CategoryActionProps) => {
             </DropdownMenuItem>
           </DialogTrigger>
           <DialogContent>
-            <DeleteCategory />
+            <DeleteCategory onConfirm={handleOnDelete} />
           </DialogContent>
         </Dialog>
       </DropdownMenuContent>

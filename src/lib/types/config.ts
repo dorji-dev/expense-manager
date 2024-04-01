@@ -29,8 +29,12 @@ export type LoginUser = {
 };
 
 export type Category = {
-  iconName: string;
-  categoryName: string;
-  amount: number;
-  $id?: string;
+  category?: string;
+  iconName?: string;
+  categoryName?: string;
+  amount?: number;
+  $id: string;
+  date?: string;
+  note?: string;
+  item?: string;
 };

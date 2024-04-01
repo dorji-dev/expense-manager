@@ -24,8 +24,6 @@ const CategoryForm = ({
   submitButtonLabel,
   onSubmit,
 }: CategoryFormProps) => {
-  console.log(initialData);
-
   return (
     <Form onSubmit={onSubmit} initialValues={initialData}>
       {({ handleSubmit, form }) => {
@@ -54,10 +52,7 @@ const CategoryForm = ({
               Budget
               <Field
                 name='amount'
-                validate={FormValidators.compose(
-                  FormValidators.required,
-                  FormValidators.minLength(4)
-                )}
+                validate={FormValidators.compose(FormValidators.required)}
               >
                 {({ input, meta }) => (
                   <Input

@@ -117,7 +117,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-//Custom Hook
 export const useAuth = () => {
   return useContext(AuthContext);
 };

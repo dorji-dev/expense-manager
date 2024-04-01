@@ -1,17 +1,24 @@
+import { useState } from "react";
+import { Category } from "../../lib/types/config";
 import { DeleteCategoryById } from "../providers/database";
 import { Button } from "../ui/button";
+import { DialogClose } from "@radix-ui/react-dialog";
 
-const DeleteCategory = () => {
-  const handleOnDelete = async (category: any) => {
-    await DeleteCategoryById(category.$id);
-  };
+interface Props {
+  onConfirm: VoidFunction;
+}
 
+const DeleteCategory = ({ onConfirm }: Props) => {
   return (
     <div className='space-y-[20px]'>
       <p className='text-center'>Are you sure?</p>
       <div className='flex justify-center gap-[20px]'>
-        <Button variant='secondary'>Cancel</Button>
-        <Button variant='destructive' onClick={handleOnDelete}>
+        <DialogClose asChild>
+          <Button type='button' variant='secondary'>
+            Cancel
+          </Button>
+        </DialogClose>
+        <Button variant='destructive' onClick={onConfirm}>
           Confirm
         </Button>
       </div>

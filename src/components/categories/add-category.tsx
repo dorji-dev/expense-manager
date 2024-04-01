@@ -11,9 +11,7 @@ const AddCategory = () => {
   const handleOnAddCategory = async (values: Category, form: any) => {
     try {
       await createCategory({
-        categoryName: values.categoryName,
-        iconName: values.iconName,
-        amount: values.amount,
+        ...values,
       }).then(() => {
         toast({
           description: " Added successfully",

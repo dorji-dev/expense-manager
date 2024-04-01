@@ -1,11 +1,16 @@
 import { Category } from "@/lib/types/config";
-import { collectionId, databaseId, databases } from "@/config/appwrite-config";
+import {
+  categoryCollectionId,
+  databaseId,
+  databases,
+  expenseCollectionId,
+} from "@/config/appwrite-config";
 import { Models, ID } from "appwrite";
 
 export async function createCategory(category: Omit<Category, "$id">) {
   const document = await databases.createDocument(
     databaseId,
-    collectionId,
+    categoryCollectionId,
     ID.unique(),
     category
   );
@@ -15,25 +20,47 @@ export async function createCategory(category: Omit<Category, "$id">) {
 }
 
 export async function getCategory() {
-  const { documents } = await databases.listDocuments(databaseId, collectionId);
+  const { documents } = await databases.listDocuments(
+    databaseId,
+    categoryCollectionId
+  );
   return {
     categories: documents.map(mapDocument),
   };
 }
 
-// export async function getCategoryById(eventId: Category["$id"]) {
-//   const document = await databases.getDocument(
-//     databaseId,
-//     collectionId,
-//     eventId
-//   );
-//   return {
-//     category: mapDocument(document),
-//   };
-// }
+export async function UpdateCategoryById(
+  catogeryId: Category["$id"],
+  data: Category
+) {
+  const result = await databases.updateDocument(
+    databaseId,
+    categoryCollectionId,
+    catogeryId,
+    data
+  );
+  return result;
+}
 
-export async function DeleteCategoryById(eventId: string) {
-  await databases.deleteDocument(databaseId, collectionId, eventId);
+export async function DeleteCategoryById(catogeryId: Category["$id"]) {
+  const result = await databases.deleteDocument(
+    databaseId,
+    categoryCollectionId,
+    catogeryId
+  );
+  return result;
+}
+
+export async function createExpense(category: Omit<Category, "$id">) {
+  const document = await databases.createDocument(
+    databaseId,
+    expenseCollectionId,
+    ID.unique(),
+    category
+  );
+  return {
+    category: mapDocument(document),
+  };
 }
 
 function mapDocument(document: Models.Document) {
@@ -42,6 +69,9 @@ function mapDocument(document: Models.Document) {
     categoryName: document.categoryName,
     amount: document.amount,
     $id: document.$id,
+    item: document.item,
+    note: document.note,
+    date: document.date,
   };
   return category;
 }
