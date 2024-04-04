@@ -51,27 +51,12 @@ export async function DeleteCategoryById(catogeryId: Category["$id"]) {
   return result;
 }
 
-export async function createExpense(category: Omit<Category, "$id">) {
-  const document = await databases.createDocument(
-    databaseId,
-    expenseCollectionId,
-    ID.unique(),
-    category
-  );
-  return {
-    category: mapDocument(document),
-  };
-}
-
 function mapDocument(document: Models.Document) {
   const category: Category = {
     iconName: document.iconName,
     categoryName: document.categoryName,
     amount: document.amount,
     $id: document.$id,
-    item: document.item,
-    note: document.note,
-    date: document.date,
   };
   return category;
 }

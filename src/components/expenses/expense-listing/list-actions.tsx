@@ -1,3 +1,4 @@
+"use client";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -5,48 +6,94 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
-import DeleteExpense from "../delete-expense";
-import EditExpense from "../edit-expense";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import DeleteConfirm from "../../shared/delete-confirm";
+import { toast } from "../../ui/use-toast";
+import { Expense } from "../../../lib/types/config";
+import ExpenseForm from "../../shared/expense-form";
+import {
+  DeleteExpensebyId,
+  UpdateExpenseById,
+} from "../../providers/database/expense";
 
-const ExpenseListActions = () => {
+interface ExpenseListActionsProps {
+  expenseId: string;
+  initialData: Expense;
+}
+
+const ExpenseListActions = ({
+  expenseId,
+  initialData,
+}: ExpenseListActionsProps) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const handleEditExpense = async (values: Expense) => {
+    try {
+      await UpdateExpenseById(initialData.$id, values).then(() => {
+        toast({
+          description: "Updated category successfully",
+        });
+      });
+    } catch (error: any) {
+      toast({
+        description: error.response.message,
+      });
+    }
+  };
+
+  const handleOnDeleteExpense = async () => {
+    try {
+      await DeleteExpensebyId(expenseId).then(() => {
+        toast({
+          description: "Delete successfull",
+        });
+      });
+    } catch (error: any) {
+      toast({
+        description: error.response.message,
+      });
+    }
+  };
 
   return (
     <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="h-[32px] w-[32px] p-0">
-          <span className="sr-only">Open menu</span>
-          <HiOutlineDotsHorizontal className="h-[16px] w-[16px]" />
+        <Button variant='ghost' className='h-[32px] w-[32px] p-0'>
+          <span className='sr-only'>Open menu</span>
+          <HiOutlineDotsHorizontal className='h-[16px] w-[16px]' />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align='end'>
         <Dialog>
           <DialogTrigger asChild>
             <DropdownMenuItem
-              className="cursor-pointer"
+              className='cursor-pointer'
               onSelect={(e) => e.preventDefault()}
             >
               Edit
             </DropdownMenuItem>
           </DialogTrigger>
           <DialogContent>
-            <EditExpense />
+            <ExpenseForm
+              onSubmit={handleEditExpense}
+              initialData={initialData}
+              submitButtonLabel='Update'
+            />
           </DialogContent>
         </Dialog>
         <Dialog>
           <DialogTrigger asChild>
             <DropdownMenuItem
-              className="cursor-pointer text-destructive focus:text-destructive"
+              className='cursor-pointer text-destructive focus:text-destructive'
               onSelect={(e) => e.preventDefault()}
             >
               Delete
             </DropdownMenuItem>
           </DialogTrigger>
           <DialogContent>
-            <DeleteExpense />
+            <DeleteConfirm onConfirm={handleOnDeleteExpense} />
           </DialogContent>
         </Dialog>
       </DropdownMenuContent>

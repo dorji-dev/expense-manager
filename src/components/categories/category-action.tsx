@@ -10,10 +10,13 @@ import {
 } from "../ui/dropdown-menu";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import { useState } from "react";
-import DeleteCategory from "./delete-category";
+import DeleteConfirm from "../shared/delete-confirm";
 import CategoryForm from "./category-form";
 import { Category } from "../../lib/types/config";
-import { DeleteCategoryById, UpdateCategoryById } from "../providers/database";
+import {
+  DeleteCategoryById,
+  UpdateCategoryById,
+} from "../providers/database/category";
 import { toast } from "../ui/use-toast";
 
 interface CategoryActionProps {
@@ -88,7 +91,7 @@ const CategoryAction = ({ initialData }: CategoryActionProps) => {
             </DropdownMenuItem>
           </DialogTrigger>
           <DialogContent>
-            <DeleteCategory onConfirm={handleOnDelete} />
+            <DeleteConfirm onConfirm={handleOnDelete} />
           </DialogContent>
         </Dialog>
       </DropdownMenuContent>

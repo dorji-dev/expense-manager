@@ -1,6 +1,6 @@
 import { CategoryIconNames, CATEGORY_ICON_MAPPING } from "@/lib/constants/icon-mapping";
 import CategoryAction from "./category-action";
-import { getCategory } from "@/components/providers/database";
+import { getCategory } from "@/components/providers/database/category";
 
 const CategoryListing = async () => {
   const { categories } = await getCategory();

@@ -3,7 +3,7 @@ import React from "react";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import { Button } from "../ui/button";
 import CategoryForm from "./category-form";
-import { createCategory } from "../providers/database";
+import { createCategory } from "../providers/database/category";
 import { toast } from "../ui/use-toast";
 import { Category } from "../../lib/types/config";
 

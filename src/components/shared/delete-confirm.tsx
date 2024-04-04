@@ -1,6 +1,3 @@
-import { useState } from "react";
-import { Category } from "../../lib/types/config";
-import { DeleteCategoryById } from "../providers/database";
 import { Button } from "../ui/button";
 import { DialogClose } from "@radix-ui/react-dialog";
 
@@ -8,7 +5,7 @@ interface Props {
   onConfirm: VoidFunction;
 }
 
-const DeleteCategory = ({ onConfirm }: Props) => {
+const DeleteConfirm = ({ onConfirm }: Props) => {
   return (
     <div className='space-y-[20px]'>
       <p className='text-center'>Are you sure?</p>
@@ -26,4 +23,4 @@ const DeleteCategory = ({ onConfirm }: Props) => {
   );
 };
 
-export default DeleteCategory;
+export default DeleteConfirm;

@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import { DatePickerSingle } from "../ui/date-picker-single";
 import { Input } from "../ui/input";
@@ -14,13 +12,19 @@ import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { Field, Form } from "react-final-form";
 import { FormValidators } from "../../lib/validationSchema";
-import { Category } from "../../lib/types/config";
-import { getCategory } from "../providers/database";
+import { Category, Expense } from "../../lib/types/config";
+import { getCategory } from "../providers/database/category";
 interface ExpenseFormProps {
-  onSubmit: (values: Category) => Promise<void>;
+  onSubmit: (values: Expense) => Promise<void>;
+  initialData?: Expense;
+  submitButtonLabel: string;
 }
 
-const ExpenseForm = ({ onSubmit }: ExpenseFormProps) => {
+const ExpenseForm = ({
+  onSubmit,
+  initialData,
+  submitButtonLabel,
+}: ExpenseFormProps) => {
   const [catagories, setCategories] = useState<Category[]>([]);
   const res = async () =>
     await getCategory().then((res) => setCategories(res?.categories));
@@ -29,15 +33,17 @@ const ExpenseForm = ({ onSubmit }: ExpenseFormProps) => {
     res();
   }, []);
 
-  // const [date, setDate] = useState<Date>();
   return (
-    <Form onSubmit={onSubmit}>
+    <Form onSubmit={onSubmit} initialValues={initialData}>
       {({ handleSubmit, form }) => {
         return (
           <form onSubmit={handleSubmit} className='space-y-[20px]'>
             <div>
               <span className='block font-medium mb-[8px]'>Date</span>
-              <Field name='date'>
+              <Field
+                name='date'
+                validate={FormValidators.compose(FormValidators.required)}
+              >
                 {({ input, meta }) => (
                   <DatePickerSingle
                     {...input}
@@ -138,7 +144,7 @@ const ExpenseForm = ({ onSubmit }: ExpenseFormProps) => {
               </Field>
             </label>
             <Button type='submit' className='w-full'>
-              Save
+              {submitButtonLabel}
             </Button>
           </form>
         );
