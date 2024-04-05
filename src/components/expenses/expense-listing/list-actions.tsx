@@ -28,13 +28,13 @@ const ExpenseListActions = ({
   initialData,
 }: ExpenseListActionsProps) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
   const handleEditExpense = async (values: Expense) => {
     try {
       await UpdateExpenseById(initialData.$id, values).then(() => {
         toast({
           description: "Updated category successfully",
         });
+        setDropdownOpen(false);
       });
     } catch (error: any) {
       toast({
@@ -49,6 +49,7 @@ const ExpenseListActions = ({
         toast({
           description: "Delete successfull",
         });
+        setDropdownOpen(false);
       });
     } catch (error: any) {
       toast({

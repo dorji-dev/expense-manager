@@ -22,6 +22,10 @@ import AddNewExpenseDialog from "../add-new-expense-dialog";
 import { Expense } from "../../../lib/types/config";
 import { client } from "../../../appwrite-config";
 import { getExpense } from "../../providers/database/expense";
+import {
+  databaseId,
+  expenseCollectionId,
+} from "../../../config/appwrite-config";
 
 const ExpenseListTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -37,7 +41,7 @@ const ExpenseListTable = () => {
 
   useEffect(() => {
     const unsubscribe = client.subscribe<Expense>(
-      "databases.66066386f36bd7316ce8.collections.660a5003b5d43e877b5e.documents",
+      `databases.${databaseId}.collections.${expenseCollectionId}.documents`,
       (res) => {
         if (res.events[0].split(".").includes("create")) {
           if (
@@ -49,6 +53,15 @@ const ExpenseListTable = () => {
           }
         } else if (res.events[0].split(".").includes("delete")) {
           setTablelist(tablelist.filter((c) => c.$id !== res.payload.$id));
+        } else if (res.events[0].split(".").includes("update")) {
+          setTablelist(
+            tablelist.map((expense) => {
+              if (expense.$id === res.payload.$id) {
+                return res.payload;
+              }
+              return expense;
+            })
+          );
         }
       }
     );
