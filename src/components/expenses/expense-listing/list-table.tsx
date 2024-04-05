@@ -7,7 +7,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { expenseListColumns } from "./expense-list-columns";
 import DataTable from "../../shared/data-table";
 import {
@@ -26,6 +26,8 @@ import {
   databaseId,
   expenseCollectionId,
 } from "../../../config/appwrite-config";
+import { useQueryState } from "nuqs";
+import { isWithinInterval } from "date-fns";
 
 const ExpenseListTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -34,6 +36,9 @@ const ExpenseListTable = () => {
   });
   const [tablelist, setTablelist] = useState<Expense[]>([]);
   const [loading, setloading] = useState(true);
+  const [category, setCategory] = useQueryState("category");
+  const [start, setStart] = useQueryState("start");
+  const [end, setEnd] = useQueryState("end");
 
   useEffect(() => {
     getCategories();
@@ -74,8 +79,20 @@ const ExpenseListTable = () => {
       setloading(false);
     });
 
+  const filteredList = useMemo(() => {
+    const filterCategory = category
+      ? tablelist.filter((expense) => expense.category == category)
+      : tablelist;
+    return filterCategory.filter((expense) => {
+      if (start && end) {
+        return isWithinInterval(expense.date, { start, end });
+      }
+      return true;
+    });
+  }, [start, end, tablelist, category]);
+
   const table = useReactTable({
-    data: tablelist,
+    data: filteredList,
     columns: expenseListColumns,
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
@@ -86,17 +103,20 @@ const ExpenseListTable = () => {
       columnVisibility,
     },
   });
+
   if (loading) return <p>Loading...</p>;
+
+  console.log("rendering");
 
   return (
     <div>
       <div className='mb-[8px] space-x-[12px] max-w-max ml-auto'>
         <AddNewExpenseDialog />
-        {!!tablelist.length && (
+        {!!filteredList.length && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant='outline' className='rounded-[10px] font-normal'>
-                Toggle columns{" "}
+                Toggle columns
                 <GoChevronDown className='ml-[8px] h-[16px] w-[16px]' />
               </Button>
             </DropdownMenuTrigger>
@@ -124,11 +144,13 @@ const ExpenseListTable = () => {
           </DropdownMenu>
         )}
       </div>
-      {!!tablelist.length ? (
+      {!!filteredList.length ? (
         <DataTable table={table} />
       ) : (
         <div className='flex justify-center items-center font-bold'>
-          Add New expenses.
+          {category
+            ? `No Expense for this ${category} category please add new Expense.`
+            : "No expense added."}
         </div>
       )}
     </div>
