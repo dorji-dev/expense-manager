@@ -34,11 +34,11 @@ const ExpenseListTable = () => {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
     $id: false,
   });
-  const [tablelist, setTablelist] = useState<Expense[]>([]);
-  const [loading, setloading] = useState(true);
-  const [category, setCategory] = useQueryState("category");
-  const [start, setStart] = useQueryState("start");
-  const [end, setEnd] = useQueryState("end");
+  const [expenseList, setExpenseList] = useState<Expense[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [category] = useQueryState("category");
+  const [startDate] = useQueryState("start");
+  const [endDate] = useQueryState("end");
 
   useEffect(() => {
     getCategories();
@@ -50,17 +50,17 @@ const ExpenseListTable = () => {
       (res) => {
         if (res.events[0].split(".").includes("create")) {
           if (
-            !tablelist.some((c) => {
+            !expenseList.some((c) => {
               return c.$id === res.payload.$id;
             })
           ) {
-            setTablelist((prev) => [...prev, res.payload]);
+            setExpenseList((prev) => [...prev, res.payload]);
           }
         } else if (res.events[0].split(".").includes("delete")) {
-          setTablelist(tablelist.filter((c) => c.$id !== res.payload.$id));
+          setExpenseList(expenseList.filter((c) => c.$id !== res.payload.$id));
         } else if (res.events[0].split(".").includes("update")) {
-          setTablelist(
-            tablelist.map((expense) => {
+          setExpenseList(
+            expenseList.map((expense) => {
               if (expense.$id === res.payload.$id) {
                 return res.payload;
               }
@@ -71,25 +71,25 @@ const ExpenseListTable = () => {
       }
     );
     return unsubscribe;
-  }, [tablelist]);
+  }, [expenseList]);
 
   const getCategories = async () =>
     await getExpense().then((res) => {
-      setTablelist(res.expenses);
-      setloading(false);
+      setExpenseList(res.expenses);
+      setLoading(false);
     });
 
   const filteredList = useMemo(() => {
     const filterCategory = category
-      ? tablelist.filter((expense) => expense.category == category)
-      : tablelist;
-    return filterCategory.filter((expense) => {
-      if (start && end) {
-        return isWithinInterval(expense.date, { start, end });
-      }
-      return true;
-    });
-  }, [start, end, tablelist, category]);
+      ? expenseList.filter((expense) => expense.category == category)
+      : expenseList;
+    return filterCategory.filter(
+      (expense) =>
+        !startDate ||
+        !endDate ||
+        isWithinInterval(expense.date, { start: startDate, end: endDate })
+    );
+  }, [startDate, endDate, expenseList, category]);
 
   const table = useReactTable({
     data: filteredList,
@@ -105,9 +105,6 @@ const ExpenseListTable = () => {
   });
 
   if (loading) return <p>Loading...</p>;
-
-  console.log("rendering");
-
   return (
     <div>
       <div className='mb-[8px] space-x-[12px] max-w-max ml-auto'>

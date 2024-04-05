@@ -15,9 +15,9 @@ import { Button } from "../../ui/button";
 
 const ExpenseListFilter = () => {
   const [catagories, setCategories] = useState<Category[]>([]);
-  const [category, setCategory] = useQueryState("category");
-  const [start, setStart] = useQueryState("start");
-  const [end, setEnd] = useQueryState("end");
+  const [fetchCategory, setFetchCategory] = useQueryState("category");
+  const [startDate, setStartDate] = useQueryState("start");
+  const [endDate] = useQueryState("end");
   const res = async () => {
     await getCategory().then((res) => setCategories(res?.categories));
   };
@@ -26,10 +26,10 @@ const ExpenseListFilter = () => {
     res();
   }, []);
 
-  const handleclear = () => {
-    setCategory(null);
-    setStart(null);
-    setEnd(null);
+  const handleClear = () => {
+    setFetchCategory(null);
+    setStartDate(null);
+    setStartDate(null);
   };
   return (
     <div>
@@ -39,22 +39,22 @@ const ExpenseListFilter = () => {
           <span className='font-medium grow'>Date</span>
           <DateRangePicker
             onUpdate={(range) => {
-              setStart(range.range.from.toISOString());
-              setEnd(range.range.to?.toISOString() ?? null);
+              setStartDate(range.range.from.toISOString());
+              setStartDate(range.range.to?.toISOString() ?? null);
             }}
-            initialDateFrom={start ? new Date(start) : undefined}
-            initialDateTo={end ? new Date(end) : undefined}
-            key={`${start}${end}`}
+            initialDateFrom={startDate ? new Date(startDate) : undefined}
+            initialDateTo={endDate ? new Date(endDate) : undefined}
+            key={`${startDate}${endDate}`}
           />
         </div>
         <div className='flex items-center gap-[20px]'>
           <span className='font-medium grow'>Category</span>
           <Select
-            defaultValue={category ?? ""}
+            defaultValue={fetchCategory ?? ""}
             onValueChange={(value) => {
               if (value === "all") {
-                setCategory(null);
-              } else setCategory(value);
+                setFetchCategory(null);
+              } else setFetchCategory(value);
             }}
           >
             <SelectTrigger className='h-[40px] max-w-max'>
@@ -70,8 +70,8 @@ const ExpenseListFilter = () => {
             </SelectContent>
           </Select>
         </div>
-        {(category || start || end) && (
-          <Button onClick={handleclear}>Clear all</Button>
+        {(fetchCategory || startDate || endDate) && (
+          <Button onClick={handleClear}>Clear all</Button>
         )}
       </div>
     </div>
