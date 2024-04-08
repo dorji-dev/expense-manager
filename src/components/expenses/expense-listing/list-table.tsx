@@ -7,7 +7,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { expenseListColumns } from "./expense-list-columns";
 import DataTable from "../../shared/data-table";
 import {
@@ -26,14 +26,19 @@ import {
   databaseId,
   expenseCollectionId,
 } from "../../../config/appwrite-config";
+import { useQueryState } from "nuqs";
+import { isWithinInterval } from "date-fns";
 
 const ExpenseListTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
     $id: false,
   });
-  const [tablelist, setTablelist] = useState<Expense[]>([]);
-  const [loading, setloading] = useState(true);
+  const [expenseList, setExpenseList] = useState<Expense[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [category] = useQueryState("category");
+  const [startDate] = useQueryState("start");
+  const [endDate] = useQueryState("end");
 
   useEffect(() => {
     getCategories();
@@ -45,17 +50,17 @@ const ExpenseListTable = () => {
       (res) => {
         if (res.events[0].split(".").includes("create")) {
           if (
-            !tablelist.some((c) => {
+            !expenseList.some((c) => {
               return c.$id === res.payload.$id;
             })
           ) {
-            setTablelist((prev) => [...prev, res.payload]);
+            setExpenseList((prev) => [...prev, res.payload]);
           }
         } else if (res.events[0].split(".").includes("delete")) {
-          setTablelist(tablelist.filter((c) => c.$id !== res.payload.$id));
+          setExpenseList(expenseList.filter((c) => c.$id !== res.payload.$id));
         } else if (res.events[0].split(".").includes("update")) {
-          setTablelist(
-            tablelist.map((expense) => {
+          setExpenseList(
+            expenseList.map((expense) => {
               if (expense.$id === res.payload.$id) {
                 return res.payload;
               }
@@ -66,16 +71,28 @@ const ExpenseListTable = () => {
       }
     );
     return unsubscribe;
-  }, [tablelist]);
+  }, [expenseList]);
 
   const getCategories = async () =>
     await getExpense().then((res) => {
-      setTablelist(res.expenses);
-      setloading(false);
+      setExpenseList(res.expenses);
+      setLoading(false);
     });
 
+  const filteredList = useMemo(() => {
+    const filterCategory = category
+      ? expenseList.filter((expense) => expense.category == category)
+      : expenseList;
+    return filterCategory.filter(
+      (expense) =>
+        !startDate ||
+        !endDate ||
+        isWithinInterval(expense.date, { start: startDate, end: endDate })
+    );
+  }, [startDate, endDate, expenseList, category]);
+
   const table = useReactTable({
-    data: tablelist,
+    data: filteredList,
     columns: expenseListColumns,
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
@@ -86,17 +103,17 @@ const ExpenseListTable = () => {
       columnVisibility,
     },
   });
-  if (loading) return <p>Loading...</p>;
 
+  if (loading) return <p>Loading...</p>;
   return (
     <div>
       <div className='mb-[8px] space-x-[12px] max-w-max ml-auto'>
         <AddNewExpenseDialog />
-        {!!tablelist.length && (
+        {!!filteredList.length && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant='outline' className='rounded-[10px] font-normal'>
-                Toggle columns{" "}
+                Toggle columns
                 <GoChevronDown className='ml-[8px] h-[16px] w-[16px]' />
               </Button>
             </DropdownMenuTrigger>
@@ -124,11 +141,13 @@ const ExpenseListTable = () => {
           </DropdownMenu>
         )}
       </div>
-      {!!tablelist.length ? (
+      {!!filteredList.length ? (
         <DataTable table={table} />
       ) : (
         <div className='flex justify-center items-center font-bold'>
-          Add New expenses.
+          {category
+            ? `No Expense for this ${category} category please add new Expense.`
+            : "No expense added."}
         </div>
       )}
     </div>
