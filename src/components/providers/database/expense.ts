@@ -28,7 +28,7 @@ export async function getExpense() {
   };
 }
 
-export async function DeleteExpensebyId(expenseId: Expense["$id"]) {
+export async function DeleteExpenseById(expenseId: Expense["$id"]) {
   const result = await databases.deleteDocument(
     databaseId,
     expenseCollectionId,

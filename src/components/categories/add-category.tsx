@@ -9,20 +9,22 @@ import { Category } from "../../lib/types/config";
 
 const AddCategory = () => {
   const handleOnAddCategory = async (values: Category, form: any) => {
-    try {
+  
       await createCategory({
         ...values,
-      }).then(() => {
-        toast({
-          description: " Added successfully",
+      })
+        .then(() => {
+          toast({
+            description: " Added successfully",
+          });
+          form.reset();
+        })
+        .catch((error) => {
+          toast({
+            description: error.response.message,
+          });
         });
-        form.reset();
-      });
-    } catch (error: any) {
-      toast({
-        description: error.response.message,
-      });
-    }
+   
   };
   return (
     <Dialog>
