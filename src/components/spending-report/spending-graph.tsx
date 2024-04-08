@@ -1,4 +1,5 @@
 import Chart from "react-apexcharts";
+import { DateRangePicker } from "../ui/date-picker-range";
 
 const SpendingGraph = () => {
   const data = [
@@ -27,7 +28,10 @@ const SpendingGraph = () => {
   return (
     <div className="space-y-[20px] mt-[20px]">
       <h6 className="font-bold">Spending this month</h6>
-      <h4 className="font-bold">$12,000</h4>
+      <div className="flex justify-between">
+        <h4 className="text-[16px] md:text-[20px] font-bold">$12,000</h4>
+        <DateRangePicker />
+      </div>
       <Chart
         options={{
           colors: ["#2563eb33"],
@@ -43,9 +47,9 @@ const SpendingGraph = () => {
           yaxis: {
             labels: {
               style: {
-                colors: ["#02081799"]
-              }
-            }
+                colors: ["#02081799"],
+              },
+            },
           },
           tooltip: {
             y: {
