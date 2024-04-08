@@ -12,7 +12,7 @@ import { Category } from "../../lib/types/config";
 
 const CategoryListing = () => {
   const [categoryListing, setCategoryListing] = useState<Category[]>([]);
-  const [loading, setloading] = useState(true);
+  const [, setLoading] = useState(true);
 
   useEffect(() => {
     getCategories();
@@ -52,7 +52,7 @@ const CategoryListing = () => {
   const getCategories = async () =>
     await getCategory().then((res) => {
       setCategoryListing(res.categories);
-      setloading(false);
+      setLoading(false);
     });
   return (
     <div className='space-y-[20px]'>

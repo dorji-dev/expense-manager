@@ -51,11 +51,11 @@ const ExpenseListActions = ({
         });
         setDropdownOpen(false);
       })
-      .catch((error) =>
+      .catch((error) => {
         toast({
           description: error.response.message,
-        })
-      );
+        });
+      });
   };
 
   return (

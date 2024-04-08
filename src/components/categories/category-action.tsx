@@ -27,30 +27,30 @@ const CategoryAction = ({ initialData }: CategoryActionProps) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const handleOnEdit = async (values: Category) => {
-    try {
-      await UpdateCategoryById(initialData.$id, values).then(() => {
+    await UpdateCategoryById(initialData.$id, values)
+      .then(() => {
         toast({
           description: "Updated category successfully",
         });
-      });
-    } catch (error: any) {
-      toast({
-        description: error.response.message,
-      });
-    }
-  };
-  const handleOnDelete = async () => {
-    try {
-      await DeleteCategoryById(initialData.$id).then(() => {
+      })
+      .catch((error) => {
         toast({
-          description: "Delete successfull",
+          description: error.response.message,
         });
       });
-    } catch (error: any) {
-      toast({
-        description: error.response.message,
+  };
+  const handleOnDelete = async () => {
+    await DeleteCategoryById(initialData.$id)
+      .then(() => {
+        toast({
+          description: "Delete successful",
+        });
+      })
+      .catch((error) => {
+        toast({
+          description: error.response.message,
+        });
       });
-    }
   };
   return (
     <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>

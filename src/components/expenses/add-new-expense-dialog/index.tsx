@@ -10,20 +10,20 @@ import { createExpense } from "../../providers/database/expense";
 const AddNewExpenseDialog = () => {
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const handleSubmitExpenseForm = async (values: Expense) => {
-    try {
-      const res = await createExpense({
-        ...values,
-      }).then(() => {
+    const res = await createExpense({
+      ...values,
+    })
+      .then(() => {
         toast({
           description: " Added successfully",
         });
         triggerRef.current?.click();
+      })
+      .catch((error) => {
+        toast({
+          description: error.response.message,
+        });
       });
-    } catch (error: any) {
-      toast({
-        description: error.response.message,
-      });
-    }
   };
   return (
     <Dialog>
