@@ -48,26 +48,7 @@ const ExpenseListTable = () => {
     const unsubscribe = client.subscribe<Expense>(
       `databases.${databaseId}.collections.${expenseCollectionId}.documents`,
       (res) => {
-        if (res.events[0].split(".").includes("create")) {
-          if (
-            !expenseList.some((c) => {
-              return c.$id === res.payload.$id;
-            })
-          ) {
-            setExpenseList((prev) => [...prev, res.payload]);
-          }
-        } else if (res.events[0].split(".").includes("delete")) {
-          setExpenseList(expenseList.filter((c) => c.$id !== res.payload.$id));
-        } else if (res.events[0].split(".").includes("update")) {
-          setExpenseList(
-            expenseList.map((expense) => {
-              if (expense.$id === res.payload.$id) {
-                return res.payload;
-              }
-              return expense;
-            })
-          );
-        }
+        getCategories();
       }
     );
     return unsubscribe;

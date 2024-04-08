@@ -21,37 +21,16 @@ const CategoryListing = () => {
   useEffect(() => {
     const unsubscribe = client.subscribe<Category>(
       `databases.${databaseId}.collections.${categoryCollectionId}.documents`,
-      (res) => {
-        if (res.events[0].split(".").includes("create")) {
-          if (
-            !categoryListing.some((c) => {
-              return c.$id === res.payload.$id;
-            })
-          ) {
-            setCategoryListing((prev) => [...prev, res.payload]);
-          }
-        } else if (res.events[0].split(".").includes("delete")) {
-          setCategoryListing(
-            categoryListing.filter((c) => c.$id !== res.payload.$id)
-          );
-        } else if (res.events[0].split(".").includes("update")) {
-          setCategoryListing(
-            categoryListing.map((categoryList) => {
-              if (categoryList.$id === res.payload.$id) {
-                return res.payload;
-              }
-              return categoryList;
-            })
-          );
-        }
+      (result) => {
+        getCategories();
       }
     );
     return unsubscribe;
   }, [categoryListing]);
 
   const getCategories = async () =>
-    await getCategory().then((res) => {
-      setCategoryListing(res.categories);
+    await getCategory().then((result) => {
+      setCategoryListing(result.categories);
       setLoading(false);
     });
   return (

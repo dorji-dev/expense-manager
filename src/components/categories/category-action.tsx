@@ -14,8 +14,8 @@ import DeleteConfirm from "../shared/delete-confirm";
 import CategoryForm from "./category-form";
 import { Category } from "../../lib/types/config";
 import {
-  DeleteCategoryById,
-  UpdateCategoryById,
+  deleteCategoryById,
+  updateCategoryById,
 } from "../providers/database/category";
 import { toast } from "../ui/use-toast";
 
@@ -27,7 +27,7 @@ const CategoryAction = ({ initialData }: CategoryActionProps) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const handleOnEdit = async (values: Category) => {
-    await UpdateCategoryById(initialData.$id, values)
+    await updateCategoryById(initialData.$id, values)
       .then(() => {
         toast({
           description: "Updated category successfully",
@@ -40,7 +40,7 @@ const CategoryAction = ({ initialData }: CategoryActionProps) => {
       });
   };
   const handleOnDelete = async () => {
-    await DeleteCategoryById(initialData.$id)
+    await deleteCategoryById(initialData.$id)
       .then(() => {
         toast({
           description: "Delete successful",

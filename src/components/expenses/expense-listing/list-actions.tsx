@@ -14,8 +14,8 @@ import { toast } from "../../ui/use-toast";
 import { Expense } from "../../../lib/types/config";
 import ExpenseForm from "../../shared/expense-form";
 import {
-  DeleteExpenseById,
-  UpdateExpenseById,
+  deleteExpenseById,
+  updateExpenseById,
 } from "../../providers/database/expense";
 
 interface ExpenseListActionsProps {
@@ -29,7 +29,7 @@ const ExpenseListActions = ({
 }: ExpenseListActionsProps) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const handleEditExpense = async (values: Expense) => {
-    await UpdateExpenseById(initialData.$id, values)
+    await updateExpenseById(initialData.$id, values)
       .then(() => {
         toast({
           description: "Updated category successfully",
@@ -44,7 +44,7 @@ const ExpenseListActions = ({
   };
 
   const handleOnDeleteExpense = async () => {
-    await DeleteExpenseById(expenseId)
+    await deleteExpenseById(expenseId)
       .then(() => {
         toast({
           description: "Delete successful",

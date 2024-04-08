@@ -29,24 +29,24 @@ export async function getCategory() {
   };
 }
 
-export async function UpdateCategoryById(
-  catogeryId: Category["$id"],
+export async function updateCategoryById(
+  categoryId: Category["$id"],
   data: Category
 ) {
   const result = await databases.updateDocument(
     databaseId,
     categoryCollectionId,
-    catogeryId,
+    categoryId,
     data
   );
   return result;
 }
 
-export async function DeleteCategoryById(catogeryId: Category["$id"]) {
+export async function deleteCategoryById(categoryId: Category["$id"]) {
   const result = await databases.deleteDocument(
     databaseId,
     categoryCollectionId,
-    catogeryId
+    categoryId
   );
   return result;
 }
@@ -57,6 +57,7 @@ function mapDocument(document: Models.Document) {
     categoryName: document.categoryName,
     amount: document.amount,
     $id: document.$id,
+    category: document.category,
   };
   return category;
 }
