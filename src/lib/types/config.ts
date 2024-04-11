@@ -28,3 +28,19 @@ export type LoginUser = {
   terms?: boolean;
 };
 
+export type Category = {
+  iconName: string;
+  categoryName: string;
+  amount: number;
+  $id: string;
+  category: string;
+};
+
+export type Expense = {
+  $id: string;
+  category: string;
+  amount: number;
+  date: string;
+  note: string;
+  item: string;
+};

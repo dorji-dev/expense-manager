@@ -21,10 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={inter.className}>
+      <body className={`${inter.className} scroll-smooth`}>
         <AuthProvider>
           <AuthRedirect>
-            <div className='flex flex-col'>
+            <div className='flex flex-col min-h-screen'>
               <SiteHeader />
               <div className='container grow my-[30px] md:mx-auto lg:w-[80%]'>
                 {children}

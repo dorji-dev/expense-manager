@@ -15,7 +15,7 @@ export const NAVIGATION_CONFIG: NavigationConfigModel = [
   },
   {
     title: "Expenses",
-    href: "/",
+    href: "/expenses",
     type: "default",
     private: true,
   },
@@ -27,20 +27,13 @@ export const NAVIGATION_CONFIG: NavigationConfigModel = [
   },
   {
     title: "Categories",
-    href: "/category",
+    href: "/expense-category",
     type: "default",
     private: true,
   },
   {
     title: "Settings",
     href: "/setting",
-    type: "default",
-    private: true,
-  },
-
-  {
-    title: "Add new",
-    href: "/addnew",
     type: "default",
     private: true,
   },
@@ -55,11 +48,7 @@ export const FOOTER_NAV_LINKS: FooterNavLinks = [
         href: "/",
       },
       {
-        title: "About Us",
-        href: "/",
-      },
-      {
-        title: "Sitemap",
+        title: "Contact Us",
         href: "/",
       },
     ],
@@ -84,10 +73,6 @@ export const FOOTER_NAV_LINKS: FooterNavLinks = [
   {
     title: "More",
     nav: [
-      {
-        title: "Contact Us",
-        href: "/",
-      },
       {
         title: "Affiliates",
         href: "/",

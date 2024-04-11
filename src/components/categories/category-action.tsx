@@ -10,51 +10,92 @@ import {
 } from "../ui/dropdown-menu";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import { useState } from "react";
-import EditCategory from "./edit-category";
-import DeleteCategory from "./delete-category";
+import DeleteConfirm from "../shared/delete-confirm";
+import CategoryForm from "./category-form";
+import { Category } from "../../lib/types/config";
+import {
+  deleteCategoryById,
+  updateCategoryById,
+} from "../providers/database/category";
+import { toast } from "../ui/use-toast";
 
-const CategoryAction = () => {
+interface CategoryActionProps {
+  initialData: Category;
+}
+
+const CategoryAction = ({ initialData }: CategoryActionProps) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  const handleOnEdit = async (values: Category) => {
+    await updateCategoryById(initialData.$id, values)
+      .then(() => {
+        toast({
+          description: "Updated category successfully",
+        });
+      })
+      .catch((error) => {
+        toast({
+          description: error.response.message,
+        });
+      });
+  };
+  const handleOnDelete = async () => {
+    await deleteCategoryById(initialData.$id)
+      .then(() => {
+        toast({
+          description: "Delete successful",
+        });
+      })
+      .catch((error) => {
+        toast({
+          description: error.response.message,
+        });
+      });
+  };
   return (
-    <div>
-      <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-[32px] w-[32px] p-0">
-            <span className="sr-only">Open menu</span>
-            <HiOutlineDotsHorizontal className="h-[16px] w-[16px]" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <Dialog>
-            <DialogTrigger asChild>
-              <DropdownMenuItem
-                className="cursor-pointer"
-                onSelect={(e) => e.preventDefault()}
-              >
-                Edit
-              </DropdownMenuItem>
-            </DialogTrigger>
-            <DialogContent className="">
-              <EditCategory />
-            </DialogContent>
-          </Dialog>
-          <Dialog>
-            <DialogTrigger asChild>
-              <DropdownMenuItem
-                className="cursor-pointer text-destructive focus:text-destructive"
-                onSelect={(e) => e.preventDefault()}
-              >
-                Delete
-              </DropdownMenuItem>
-            </DialogTrigger>
-            <DialogContent>
-              <DeleteCategory />
-            </DialogContent>
-          </Dialog>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </div>
+    <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
+      <DropdownMenuTrigger asChild>
+        <Button variant='ghost' className='h-[32px] w-[32px] p-0'>
+          <span className='sr-only'>Open menu</span>
+          <HiOutlineDotsHorizontal className='h-[16px] w-[16px]' />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align='end'>
+        <Dialog>
+          <DialogTrigger asChild>
+            <DropdownMenuItem
+              className='cursor-pointer'
+              onSelect={(e) => {
+                e.preventDefault();
+              }}
+            >
+              Edit
+            </DropdownMenuItem>
+          </DialogTrigger>
+          <DialogContent className=''>
+            <h6 className='text-[16px] text-muted-foreground'>Edit category</h6>
+            <CategoryForm
+              onSubmit={handleOnEdit}
+              initialData={initialData}
+              submitButtonLabel='Update'
+            />
+          </DialogContent>
+        </Dialog>
+        <Dialog>
+          <DialogTrigger asChild>
+            <DropdownMenuItem
+              className='cursor-pointer text-destructive focus:text-destructive'
+              onSelect={(e) => e.preventDefault()}
+            >
+              Delete
+            </DropdownMenuItem>
+          </DialogTrigger>
+          <DialogContent>
+            <DeleteConfirm onConfirm={handleOnDelete} />
+          </DialogContent>
+        </Dialog>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 
