@@ -1,45 +1,59 @@
-import { CategoryIconNames, CATEGORY_ICON_MAPPING } from "@/lib/constants/icon-mapping";
+"use client";
+import {
+  CategoryIconNames,
+  CATEGORY_ICON_MAPPING,
+} from "@/lib/constants/icon-mapping";
 import CategoryAction from "./category-action";
-
-const categories = [
-  {
-    name: "Food",
-    budget: 50,
-    icon: "food",
-  },
-  {
-    name: "Transportation",
-    budget: 200,
-    icon: "transportation",
-  },
-  {
-    name: "Housing",
-    budget: 500,
-    icon: "housing",
-  },
-];
+import { getCategory } from "@/components/providers/database/category";
+import { useEffect, useState } from "react";
+import { client } from "../../appwrite-config";
+import { categoryCollectionId, databaseId } from "../../config/appwrite-config";
+import { Category } from "../../lib/types/config";
 
 const CategoryListing = () => {
+  const [categoryListing, setCategoryListing] = useState<Category[]>([]);
+  const [, setLoading] = useState(true);
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = client.subscribe<Category>(
+      `databases.${databaseId}.collections.${categoryCollectionId}.documents`,
+      (result) => {
+        getCategories();
+      }
+    );
+    return unsubscribe;
+  }, [categoryListing]);
+
+  const getCategories = async () =>
+    await getCategory().then((result) => {
+      setCategoryListing(result.categories);
+      setLoading(false);
+    });
   return (
-    <div className="space-y-[20px]">
-      {categories.map((category) => {
-        const CategoryIcon = CATEGORY_ICON_MAPPING[category.icon as CategoryIconNames];
+    <div className='space-y-[20px]'>
+      {categoryListing.map((category) => {
+        const CategoryIcon =
+          CATEGORY_ICON_MAPPING[category.iconName as CategoryIconNames];
         return (
           <div
-            key={category.name}
-            className="flex items-center justify-between"
+            key={category.categoryName}
+            className='flex items-center justify-between'
           >
-            <div className="flex items-center gap-[12px]">
-              <div className="w-[46px] aspect-square flex justify-center items-center bg-muted rounded-[10px]">
-                <CategoryIcon className="text-[20px]" />
+            <div className='flex items-center gap-[12px]'>
+              <div className='w-[46px] aspect-square flex justify-center items-center bg-muted rounded-[10px]'>
+                <CategoryIcon className='text-[20px]' />
               </div>
               <div>
-                <p className="font-medium">{category.name}</p>
-                <p className="text-muted-foreground">${category.budget}</p>
+                <p className='font-medium'>{category.categoryName}</p>
+                <p className='text-muted-foreground'>Nu.{category.amount}</p>
               </div>
             </div>
             <div>
-              <CategoryAction />
+              <CategoryAction initialData={{ ...category }} />
             </div>
           </div>
         );
