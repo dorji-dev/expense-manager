@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 export default function Page() {
   return (
     <main>
-      <Tabs defaultValue='account' className='w-full'>
+      <Tabs defaultValue='report' className='w-full'>
         <TabsList>
           <TabsTrigger value='report' className='w-[10vw]'>
             Reports

@@ -47,7 +47,7 @@ const ExpenseListTable = () => {
   useEffect(() => {
     const unsubscribe = client.subscribe<Expense>(
       `databases.${databaseId}.collections.${expenseCollectionId}.documents`,
-      (res) => {
+      () => {
         getCategories();
       }
     );
@@ -55,8 +55,8 @@ const ExpenseListTable = () => {
   }, [expenseList]);
 
   const getCategories = async () =>
-    await getExpense().then((res) => {
-      setExpenseList(res.expenses);
+    await getExpense().then((result) => {
+      setExpenseList(result.expenses);
       setLoading(false);
     });
 
