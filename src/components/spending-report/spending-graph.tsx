@@ -1,10 +1,12 @@
 import Chart from "react-apexcharts";
-import { useEffect, useState } from "react";
-import { Category } from "../../lib/types/config";
+import { useCallback, useEffect, useState } from "react";
+import { Category, Expense } from "../../lib/types/config";
 import { getCategory } from "../providers/database/category";
+import { getExpense } from "../providers/database/expense";
 
 const SpendingGraph = () => {
   const [categories, setCategories] = useState<Category[]>([]);
+  const [expense, setExpense] = useState<Expense[]>([]);
 
   useEffect(() => {
     (async () => {
@@ -13,14 +15,33 @@ const SpendingGraph = () => {
     })();
   }, []);
 
+  useEffect(() => {
+    (async () => {
+      const expenseData = await getExpense();
+      setExpense(expenseData.expenses);
+    })();
+  }, []);
+
   const categoryGrandTotal = categories.reduce(
     (acc, categoryAmount) => acc + categoryAmount.amount,
     0
   );
 
+  const getCategoryExpense = useCallback(
+    (categoryName: string) => {
+      let sum = 0;
+      const categoryExpenses = expense.filter(
+        (expense) => expense?.category === categoryName
+      );
+      categoryExpenses.forEach((item) => (sum += item.amount));
+      return sum;
+    },
+    [categories, expense]
+  );
+
   const data = categories.map((category) => ({
     x: category.categoryName,
-    y: category.amount,
+    y: getCategoryExpense?.(category.categoryName),
   }));
 
   return (

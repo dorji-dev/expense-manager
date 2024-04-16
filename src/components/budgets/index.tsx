@@ -25,7 +25,6 @@ const Budgets = () => {
       setExpense(expenseData.expenses);
     })();
   }, []);
-  console.log(expense);
 
   const getCategoryExpense = useCallback(
     (categoryName: string) => {
