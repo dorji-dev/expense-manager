@@ -27,15 +27,14 @@ const Budgets = () => {
   }, []);
 
   const getCategoryExpense = useCallback(
-    (categoryName: string) => {
-      let sum = 0;
-      const categoryExpenses = expense.filter(
-        (expense) => expense?.category === categoryName
-      );
-      categoryExpenses.forEach((item) => (sum += item.amount));
-      return sum;
+    (categoryName: string): number => {
+      return expense.reduce((sum, expenseItem) => {
+        return expenseItem.category === categoryName
+          ? sum + expenseItem.amount
+          : sum;
+      }, 0);
     },
-    [categories, expense]
+    [expense]
   );
 
   if (!categories.length || !expense.length) {
