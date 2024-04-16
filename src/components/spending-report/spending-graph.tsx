@@ -1,36 +1,35 @@
 import Chart from "react-apexcharts";
-import { DateRangePicker } from "../ui/date-picker-range";
+import { useEffect, useState } from "react";
+import { Category } from "../../lib/types/config";
+import { getCategory } from "../providers/database/category";
 
 const SpendingGraph = () => {
-  const data = [
-    {
-      x: "Food",
-      y: 2000,
-    },
-    {
-      x: "Housing",
-      y: 5000,
-    },
-    {
-      x: "Transportation",
-      y: 2000,
-    },
-    {
-      x: "Party",
-      y: 1000,
-    },
-    {
-      x: "Recreation",
-      y: 1000,
-    },
-  ];
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const categoriesRes = await getCategory();
+      setCategories(categoriesRes.categories);
+    })();
+  }, []);
+
+  const categoryGrandTotal = categories.reduce(
+    (acc, categoryAmount) => acc + categoryAmount.amount,
+    0
+  );
+
+  const data = categories.map((category) => ({
+    x: category.categoryName,
+    y: category.amount,
+  }));
 
   return (
-    <div className="space-y-[20px] mt-[20px]">
-      <h6 className="font-bold">Spending this month</h6>
-      <div className="flex justify-between">
-        <h4 className="text-[16px] md:text-[20px] font-bold">$12,000</h4>
-        <DateRangePicker />
+    <div className='space-y-[20px] mt-[20px]'>
+      <h6 className='font-bold'>Spending this month</h6>
+      <div className='flex justify-between'>
+        <h4 className='text-[16px] md:text-[20px] font-bold'>
+          Nu.{categoryGrandTotal}
+        </h4>
       </div>
       <Chart
         options={{
@@ -76,8 +75,8 @@ const SpendingGraph = () => {
           },
         }}
         series={[{ data, name: "Spending" }]}
-        type="bar"
-        width="100%"
+        type='bar'
+        width='100%'
         height={400}
       />
     </div>
