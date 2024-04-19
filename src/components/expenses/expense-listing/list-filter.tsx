@@ -17,19 +17,19 @@ const ExpenseListFilter = () => {
   const [catagories, setCategories] = useState<Category[]>([]);
   const [fetchCategory, setFetchCategory] = useQueryState("category");
   const [startDate, setStartDate] = useQueryState("start");
-  const [endDate] = useQueryState("end");
-  const res = async () => {
-    await getCategory().then((res) => setCategories(res?.categories));
+  const [endDate, setEndDate] = useQueryState("end");
+  const result = async () => {
+    await getCategory().then((result) => setCategories(result?.categories));
   };
 
   useEffect(() => {
-    res();
+    result();
   }, []);
 
   const handleClear = () => {
     setFetchCategory(null);
     setStartDate(null);
-    setStartDate(null);
+    setEndDate(null);
   };
   return (
     <div>
@@ -40,7 +40,9 @@ const ExpenseListFilter = () => {
           <DateRangePicker
             onUpdate={(range) => {
               setStartDate(range.range.from.toISOString());
-              setStartDate(range.range.to?.toISOString() ?? null);
+              setEndDate(
+                range.range.to?.toISOString() ?? range.range.from.toISOString()
+              );
             }}
             initialDateFrom={startDate ? new Date(startDate) : undefined}
             initialDateTo={endDate ? new Date(endDate) : undefined}
