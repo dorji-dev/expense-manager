@@ -8,21 +8,20 @@ import { getCategory } from "@/components/providers/database/category";
 import { getExpense } from "@/components/providers/database/expense";
 import { useCallback, useEffect, useState } from "react";
 import { Category, Expense } from "../../lib/types/config";
+import { Skeleton } from "../ui/skeleton";
 
 const Budgets = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [expense, setExpense] = useState<Expense[]>([]);
-  useEffect(() => {
-    (async () => {
-      const categoriesRes = await getCategory();
-      setCategories(categoriesRes.categories);
-    })();
-  }, []);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
       const expenseData = await getExpense();
+      const categoriesRes = await getCategory();
       setExpense(expenseData.expenses);
+      setCategories(categoriesRes.categories);
+      setIsLoading(false);
     })();
   }, []);
 
@@ -36,6 +35,8 @@ const Budgets = () => {
     },
     [expense]
   );
+
+  if (isLoading) return <Skeleton className='h-[400px] w-full' />;
 
   if (!categories.length || !expense.length) {
     return;
