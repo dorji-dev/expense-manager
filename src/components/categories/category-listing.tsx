@@ -21,7 +21,7 @@ const CategoryListing = () => {
   useEffect(() => {
     const unsubscribe = client.subscribe<Category>(
       `databases.${databaseId}.collections.${categoryCollectionId}.documents`,
-      (result) => {
+      () => {
         getCategories();
       }
     );
