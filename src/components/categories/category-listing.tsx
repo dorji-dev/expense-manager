@@ -6,8 +6,11 @@ import {
 import CategoryAction from "./category-action";
 import { getCategory } from "@/components/providers/database/category";
 import { useEffect, useState } from "react";
-import { client } from "../../appwrite-config";
-import { categoryCollectionId, databaseId } from "../../config/appwrite-config";
+import {
+  categoryCollectionId,
+  client,
+  databaseId,
+} from "../../config/appwrite-config";
 import { Category } from "../../lib/types/config";
 
 const CategoryListing = () => {

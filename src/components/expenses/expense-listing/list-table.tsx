@@ -20,9 +20,9 @@ import { Button } from "@/components/ui/button";
 import { GoChevronDown } from "react-icons/go";
 import AddNewExpenseDialog from "../add-new-expense-dialog";
 import { Expense } from "../../../lib/types/config";
-import { client } from "../../../appwrite-config";
 import { getExpense } from "../../providers/database/expense";
 import {
+  client,
   databaseId,
   expenseCollectionId,
 } from "../../../config/appwrite-config";

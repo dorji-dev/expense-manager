@@ -13,7 +13,6 @@ export type FooterNavLinks = {
   }[];
 }[];
 
-
 export type NewUser = {
   name: string;
   email: string;
@@ -43,4 +42,17 @@ export type Expense = {
   date: string;
   note: string;
   item: string;
+};
+
+export type Profile = {
+  name: string;
+  email: string;
+  $id: string;
+  profileImageId: string;
+};
+
+export type ProfileImage = {
+  imageHeight: string;
+  imageWidth: string;
+  imageFileId: string;
 };
