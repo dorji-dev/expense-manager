@@ -6,12 +6,16 @@ import { Expense } from "../../../lib/types/config";
 import { toast } from "../../ui/use-toast";
 import { useRef } from "react";
 import { createExpense } from "../../providers/database/expense";
+import { useAuth, AuthContextProps } from "../../providers/auth-provider";
 
 const AddNewExpenseDialog = () => {
+  const { user } = useAuth() as AuthContextProps;
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const handleSubmitExpenseForm = async (values: Expense) => {
     const res = await createExpense({
       ...values,
+      amount: +values.amount,
+      userId: user.$id,
     })
       .then(() => {
         toast({

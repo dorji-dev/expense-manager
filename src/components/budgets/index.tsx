@@ -9,16 +9,18 @@ import { getExpense } from "@/components/providers/database/expense";
 import { useCallback, useEffect, useState } from "react";
 import { Category, Expense } from "../../lib/types/config";
 import { Skeleton } from "../ui/skeleton";
+import { useAuth, AuthContextProps } from "../providers/auth-provider";
 
 const Budgets = () => {
+  const { user } = useAuth() as AuthContextProps;
   const [categories, setCategories] = useState<Category[]>([]);
   const [expense, setExpense] = useState<Expense[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
-      const expenseData = await getExpense();
-      const categoriesRes = await getCategory();
+      const expenseData = await getExpense(user.$id);
+      const categoriesRes = await getCategory(user.$id);
       setExpense(expenseData.expenses);
       setCategories(categoriesRes.categories);
       setIsLoading(false);

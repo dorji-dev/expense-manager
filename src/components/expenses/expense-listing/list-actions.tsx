@@ -17,6 +17,7 @@ import {
   deleteExpenseById,
   updateExpenseById,
 } from "../../providers/database/expense";
+import { useAuth, AuthContextProps } from "../../providers/auth-provider";
 
 interface ExpenseListActionsProps {
   expenseId: string;
@@ -27,9 +28,14 @@ const ExpenseListActions = ({
   expenseId,
   initialData,
 }: ExpenseListActionsProps) => {
+  const { user } = useAuth() as AuthContextProps;
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const handleEditExpense = async (values: Expense) => {
-    await updateExpenseById(initialData.$id, values)
+    await updateExpenseById(initialData.$id, {
+      ...values,
+      amount: +values.amount,
+      userId: user.$id,
+    })
       .then(() => {
         toast({
           description: "Updated category successfully",

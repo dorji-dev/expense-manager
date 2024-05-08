@@ -12,8 +12,10 @@ import {
   databaseId,
 } from "../../config/appwrite-config";
 import { Category } from "../../lib/types/config";
+import { useAuth, AuthContextProps } from "../providers/auth-provider";
 
 const CategoryListing = () => {
+  const { user } = useAuth() as AuthContextProps;
   const [categoryListing, setCategoryListing] = useState<Category[]>([]);
   const [, setLoading] = useState(true);
 
@@ -32,7 +34,7 @@ const CategoryListing = () => {
   }, [categoryListing]);
 
   const getCategories = async () =>
-    await getCategory().then((result) => {
+    await getCategory(user.$id).then((result) => {
       setCategoryListing(result.categories);
       setLoading(false);
     });

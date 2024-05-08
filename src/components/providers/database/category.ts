@@ -5,7 +5,7 @@ import {
   databases,
   expenseCollectionId,
 } from "@/config/appwrite-config";
-import { Models, ID } from "appwrite";
+import { Models, ID, Query } from "appwrite";
 
 export async function createCategory(category: Omit<Category, "$id">) {
   const document = await databases.createDocument(
@@ -19,10 +19,11 @@ export async function createCategory(category: Omit<Category, "$id">) {
   };
 }
 
-export async function getCategory() {
+export async function getCategory(userId: string) {
   const { documents } = await databases.listDocuments(
     databaseId,
-    categoryCollectionId
+    categoryCollectionId,
+    [Query.equal("userId", userId)]
   );
   return {
     categories: documents.map(mapDocument),
@@ -58,6 +59,7 @@ function mapDocument(document: Models.Document) {
     amount: document.amount,
     $id: document.$id,
     category: document.category,
+    userId: document.userId,
   };
   return category;
 }

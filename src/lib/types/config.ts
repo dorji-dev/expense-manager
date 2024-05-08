@@ -33,6 +33,7 @@ export type Category = {
   amount: number;
   $id: string;
   category: string;
+  userId: string;
 };
 
 export type Expense = {
@@ -42,6 +43,7 @@ export type Expense = {
   date: string;
   note: string;
   item: string;
+  userId: string;
 };
 
 export type Profile = {

@@ -4,7 +4,7 @@ import {
   databases,
   expenseCollectionId,
 } from "@/config/appwrite-config";
-import { Models, ID } from "appwrite";
+import { Models, ID, Query } from "appwrite";
 
 export async function createExpense(expense: Omit<Expense, "$id">) {
   const document = await databases.createDocument(
@@ -18,10 +18,11 @@ export async function createExpense(expense: Omit<Expense, "$id">) {
   };
 }
 
-export async function getExpense() {
+export async function getExpense(userId: string) {
   const { documents } = await databases.listDocuments(
     databaseId,
-    expenseCollectionId
+    expenseCollectionId,
+    [Query.equal("userId", userId)]
   );
   return {
     expenses: documents.map(mapDocument),
@@ -58,6 +59,7 @@ function mapDocument(document: Models.Document) {
     note: document.note,
     date: document.date,
     category: document.category,
+    userId: document.userId,
   };
   return expense;
 }

@@ -12,14 +12,18 @@ import { Category } from "../../../lib/types/config";
 import { getCategory } from "../../providers/database/category";
 import { useQueryState } from "nuqs";
 import { Button } from "../../ui/button";
+import { AuthContextProps, useAuth } from "../../providers/auth-provider";
 
 const ExpenseListFilter = () => {
+  const { user } = useAuth() as AuthContextProps;
   const [catagories, setCategories] = useState<Category[]>([]);
   const [fetchCategory, setFetchCategory] = useQueryState("category");
   const [startDate, setStartDate] = useQueryState("start");
   const [endDate, setEndDate] = useQueryState("end");
   const result = async () => {
-    await getCategory().then((result) => setCategories(result?.categories));
+    await getCategory(user.$id).then((result) =>
+      setCategories(result?.categories)
+    );
   };
 
   useEffect(() => {

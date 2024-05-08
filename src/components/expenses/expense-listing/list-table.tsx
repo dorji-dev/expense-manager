@@ -28,8 +28,10 @@ import {
 } from "../../../config/appwrite-config";
 import { useQueryState } from "nuqs";
 import { isWithinInterval } from "date-fns";
+import { AuthContextProps, useAuth } from "../../providers/auth-provider";
 
 const ExpenseListTable = () => {
+  const { user } = useAuth() as AuthContextProps;
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
     $id: false,
@@ -55,7 +57,7 @@ const ExpenseListTable = () => {
   }, [expenseList]);
 
   const getCategories = async () =>
-    await getExpense().then((result) => {
+    await getExpense(user.$id).then((result) => {
       setExpenseList(result.expenses);
       setLoading(false);
     });
