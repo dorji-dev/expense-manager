@@ -29,8 +29,6 @@ const UserProfile = () => {
     });
   }, [user]);
 
-  console.log(profileData);
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const selectedFile = e.target.files[0];
@@ -57,9 +55,6 @@ const UserProfile = () => {
       const updateProfileImage = !!profileData?.profileImageId;
       const image = getPreviewImageById(profileData?.profileImageId as string);
       image && setImageUrl(image.href);
-      // const image = getPreviewImageById(profileData?.profileImageId ?? "")
-
-      console.log(updateProfileImage);
 
       if (updateProfileImage) {
         const imageFile = await uploadProfileImage(
@@ -87,7 +82,6 @@ const UserProfile = () => {
       toast({
         description: "File uploaded successfully",
       });
-      console.log(updateProfileImage, "this");
     } catch (error: any) {
       toast({
         description: error.response.message,
@@ -116,8 +110,6 @@ const UserProfile = () => {
     () => ({ name: profileData?.name, email: profileData?.email }),
     [profileData]
   );
-
-  console.log(imageUrl, "tesd");
 
   return (
     <div className='max-w-[500px] mx-auto space-y-[30px]'>
