@@ -107,6 +107,4 @@ const SignInForm = () => {
 };
 
 export default SignInForm;
-function loginUser(userInfo: { email: string; password: string }) {
-  throw new Error("Function not implemented.");
-}
+

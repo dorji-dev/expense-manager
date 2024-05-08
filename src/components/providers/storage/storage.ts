@@ -16,5 +16,5 @@ export async function uploadProfileImage(
 }
 
 export function getPreviewImageById(fileId: string) {
-  return storage.getFilePreview(storageId, fileId);
+  return fileId ? storage.getFilePreview(storageId, fileId) : null;
 }

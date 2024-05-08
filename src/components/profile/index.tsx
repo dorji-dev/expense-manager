@@ -19,11 +19,17 @@ const UserProfile = () => {
   const { user } = useAuth() as AuthContextProps;
   const [profileData, setProfileData] = useState<Profile>();
   const [file, setFile] = useState<File>();
-  const [imageUrl, setImageUrl] = useState<string>("");
+  const [imageUrl, setImageUrl] = useState<string>();
 
   useEffect(() => {
-    getProfile(user.$id).then((profile) => setProfileData(profile));
+    getProfile(user.$id).then((profile) => {
+      setProfileData(profile);
+      const image = getPreviewImageById(profile?.profileImageId as string);
+      image && setImageUrl(image.href);
+    });
   }, [user]);
+
+  console.log(profileData);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -32,7 +38,7 @@ const UserProfile = () => {
 
       const reader = new FileReader();
       reader.onload = () => {
-        setImageUrl(reader.result as string);
+        setImageUrl(reader.result as string); // this "as" is typecasting. we know more than typescript
       };
       reader.readAsDataURL(selectedFile);
     }
@@ -49,23 +55,33 @@ const UserProfile = () => {
 
     try {
       const updateProfileImage = !!profileData?.profileImageId;
+      const image = getPreviewImageById(profileData?.profileImageId as string);
+      image && setImageUrl(image.href);
+      // const image = getPreviewImageById(profileData?.profileImageId ?? "")
+
+      console.log(updateProfileImage);
 
       if (updateProfileImage) {
-        const uploadedFile = await uploadProfileImage(
-          file,
-          "create",
-          profileData.$id
-        );
-        const image = getPreviewImageById(uploadedFile?.$id);
-        setImageUrl(image.href);
-      } else {
-        const updateFile = await uploadProfileImage(
+        const imageFile = await uploadProfileImage(
           file,
           "update",
-          profileData.$id
+          profileData.profileImageId
         );
-        const image = getPreviewImageById(updateFile?.$id);
-        setImageUrl(image.href);
+        await updateUser(profileData.$id, {
+          ...profileData,
+          profileImageId: imageFile.$id,
+        });
+      } else {
+        const imageFile = await uploadProfileImage(
+          file,
+          "create",
+          profileData?.profileImageId as string
+        );
+        profileData &&
+          (await updateUser(profileData.$id, {
+            ...profileData,
+            profileImageId: imageFile.$id,
+          }));
       }
 
       toast({
@@ -101,6 +117,8 @@ const UserProfile = () => {
     [profileData]
   );
 
+  console.log(imageUrl, "tesd");
+
   return (
     <div className='max-w-[500px] mx-auto space-y-[30px]'>
       <form
@@ -118,7 +136,7 @@ const UserProfile = () => {
             onChange={handleFileChange}
           />
           <Image
-            src={imageUrl?.length ? imageUrl : "/images/default-user.png"}
+            src={imageUrl ?? "/images/default-user.png"}
             alt='Profile image'
             fill
             priority={true}
