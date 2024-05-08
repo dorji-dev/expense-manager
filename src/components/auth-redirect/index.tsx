@@ -12,33 +12,33 @@ const publicRoutes = [
 
 const AuthRedirect = ({ children }: React.PropsWithChildren) => {
   const router = useRouter();
-  const { user, isloading } = useAuth() as AuthContextProps;
+  const { user, isLoading } = useAuth() as AuthContextProps;
   const pathName = usePathname();
   useEffect(() => {
     if (
-      !isloading &&
-      !user &&
+      !isLoading &&
+      !user.$id &&
       !publicRoutes.includes(pathName) &&
       pathName !== "/"
     ) {
       router.push("/login");
     } else if (
-      !isloading &&
-      user &&
+      !isLoading &&
+      user.$id &&
       publicRoutes.includes(pathName) &&
       pathName !== "/"
     ) {
       router.push("/");
     }
-  }, [user, isloading]);
+  }, [user, isLoading]);
 
   if (
-    (isloading && pathName !== "/") ||
-    (!user && !publicRoutes.includes(pathName) && pathName !== "/") ||
-    (user && publicRoutes.includes(pathName) && pathName !== "/")
+    (isLoading && pathName !== "/") ||
+    (!user.$id && !publicRoutes.includes(pathName) && pathName !== "/") ||
+    (user.$id && publicRoutes.includes(pathName) && pathName !== "/")
   )
     return (
-      <div className='flex justify-center h-screen items-center'>
+      <div className='flex items-center justify-center h-screen'>
         loading...
       </div>
     );

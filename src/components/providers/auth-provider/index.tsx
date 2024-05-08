@@ -1,16 +1,14 @@
 "use client";
 import { ID, Models } from "appwrite";
-import {
-  createContext,
-  useState,
-  useEffect,
-  useContext,
-  ReactNode,
-} from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import { account } from "@/config/appwrite-config";
+import { createProfile } from "../database/profile";
 
 export interface AuthContextProps {
-  user: any;
+  user: {
+    $id: string;
+    email: string;
+  };
   loginUser: (email: string, password: string) => Promise<void>;
   logoutUser: () => Promise<void>;
   registerUser: (
@@ -18,7 +16,7 @@ export interface AuthContextProps {
     password: string,
     username: string
   ) => Promise<void>;
-  isloading: boolean;
+  isLoading: boolean;
   forgotPassword: (email: string) => Promise<void>;
   resetPassword: (
     userId: string,
@@ -30,7 +28,7 @@ export interface AuthContextProps {
 const AuthContext = createContext<AuthContextProps | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isloading, setIsloading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<Models.User<Models.Preferences> | null>(
     null
   );
@@ -60,7 +58,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     username: string
   ) => {
     try {
-      await account.create(ID.unique(), email, password, username);
+      const user = await account.create(ID.unique(), email, password);
+      await createProfile(
+        { name: username, email, profileImageId: "" },
+        user.$id
+      );
       await account.createEmailSession(email, password);
       let accountDetails = await account.get();
       setUser(accountDetails);
@@ -99,15 +101,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     } catch (error) {
       console.error("ERROR", error);
     }
-    setIsloading(false);
+    setIsLoading(false);
   };
 
   const contextData: AuthContextProps = {
-    user,
+    user: { $id: user?.$id as string, email: user?.email as string },
     loginUser,
     logoutUser,
     registerUser,
-    isloading,
+    isLoading,
     forgotPassword,
     resetPassword,
   };

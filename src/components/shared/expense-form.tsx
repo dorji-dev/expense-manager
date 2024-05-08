@@ -14,6 +14,7 @@ import { Field, Form } from "react-final-form";
 import { FormValidators } from "../../lib/validationSchema";
 import { Category, Expense } from "../../lib/types/config";
 import { getCategory } from "../providers/database/category";
+import { useAuth, AuthContextProps } from "../providers/auth-provider";
 interface ExpenseFormProps {
   onSubmit: (values: Expense) => Promise<void>;
   initialData?: Expense;
@@ -25,9 +26,10 @@ const ExpenseForm = ({
   initialData,
   submitButtonLabel,
 }: ExpenseFormProps) => {
+  const { user } = useAuth() as AuthContextProps;
   const [catagories, setCategories] = useState<Category[]>([]);
   const res = async () =>
-    await getCategory().then((res) => setCategories(res?.categories));
+    await getCategory(user.$id).then((res) => setCategories(res?.categories));
 
   useEffect(() => {
     res();

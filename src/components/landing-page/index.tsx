@@ -7,14 +7,14 @@ import { buttonVariants } from "@/components/ui/button";
 import { AuthContextProps, useAuth } from "../providers/auth-provider";
 import { Skeleton } from "../ui/skeleton";
 const LandingPage = () => {
-  const { user, isloading } = useAuth() as AuthContextProps;
-  if (isloading) return <Skeleton className='h-[415px] w-full' />;
+  const { user, isLoading } = useAuth() as AuthContextProps;
+  if (isLoading) return <Skeleton className='h-[415px] w-full' />;
   return (
     <>
       <div className="bg-[url('/images/app_landing.jpg')] bg-center pt-[100px] pb-[20px] md:pb-[40px] bg-cover rounded-[12px] px-[20px] md:px-[40px]">
-        <div className='h-full flex flex-col justify-end'>
+        <div className='flex flex-col justify-end h-full'>
           <div className='space-y-[20px]'>
-            <h2 className='text-white font-extrabold'>
+            <h2 className='font-extrabold text-white'>
               SpendWise helps you spend smarter and save more.
             </h2>
             <p className='text-white text-[18px] font-extralight'>
@@ -24,7 +24,7 @@ const LandingPage = () => {
               spending, SpendWise has you covered.
             </p>
             <div className='flex flex-col space-y-[20px] xs:flex-row xs:space-y-0 xs:space-x-[20px] !mt-[40px]'>
-              {user ? (
+              {user.$id ? (
                 <>
                   <Link
                     href='#exploreID'

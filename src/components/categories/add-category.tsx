@@ -6,25 +6,28 @@ import CategoryForm from "./category-form";
 import { createCategory } from "../providers/database/category";
 import { toast } from "../ui/use-toast";
 import { Category } from "../../lib/types/config";
+import { useAuth, AuthContextProps } from "../providers/auth-provider";
 
 const AddCategory = () => {
+  const { user } = useAuth() as AuthContextProps;
+
   const handleOnAddCategory = async (values: Category, form: any) => {
-  
-      await createCategory({
-        ...values,
-      })
-        .then(() => {
-          toast({
-            description: " Added successfully",
-          });
-          form.reset();
-        })
-        .catch((error) => {
-          toast({
-            description: error.response.message,
-          });
+    await createCategory({
+      ...values,
+      amount: +values.amount,
+      userId: user.$id,
+    })
+      .then(() => {
+        toast({
+          description: " Added successfully",
         });
-   
+        form.reset();
+      })
+      .catch((error) => {
+        toast({
+          description: error.response.message,
+        });
+      });
   };
   return (
     <Dialog>

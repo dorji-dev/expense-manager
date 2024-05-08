@@ -7,8 +7,11 @@ import { DateRangePicker } from "../ui/date-picker-range";
 import { useQueryState } from "nuqs";
 import { isWithinInterval } from "date-fns";
 import { Button } from "../ui/button";
+import { useAuth, AuthContextProps } from "../providers/auth-provider";
 
 const SpendingGraph = () => {
+  const { user } = useAuth() as AuthContextProps;
+
   const [categories, setCategories] = useState<Category[]>([]);
   const [expenseList, setExpenseList] = useState<Expense[]>([]);
   const [startDate, setStartDate] = useQueryState("start");
@@ -17,14 +20,14 @@ const SpendingGraph = () => {
 
   useEffect(() => {
     (async () => {
-      const categoriesRes = await getCategory();
+      const categoriesRes = await getCategory(user.$id);
       setCategories(categoriesRes.categories);
     })();
   }, []);
 
   useEffect(() => {
     (async () => {
-      const expenseData = await getExpense();
+      const expenseData = await getExpense(user.$id);
       setExpenseList(expenseData.expenses);
     })();
   }, []);

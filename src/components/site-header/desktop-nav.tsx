@@ -8,8 +8,8 @@ import Loader from "../loader";
 
 const DesktopNav = () => {
   const desktopNav = NAVIGATION_CONFIG.filter((nav) => nav.type === "default");
-  const { user, isloading, logoutUser } = useAuth() as AuthContextProps;
-  if (isloading) {
+  const { user, isLoading, logoutUser } = useAuth() as AuthContextProps;
+  if (isLoading) {
     return (
       <div>
         <Loader />
@@ -22,7 +22,7 @@ const DesktopNav = () => {
 
   return (
     <nav className='hidden md:block space-x-[20px]'>
-      {user ? (
+      {user.$id ? (
         <>
           {publicNavItems.map((nav) => (
             <Link href={nav.href} key={nav.title}>

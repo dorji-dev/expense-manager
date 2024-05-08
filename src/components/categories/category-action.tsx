@@ -18,6 +18,7 @@ import {
   updateCategoryById,
 } from "../providers/database/category";
 import { toast } from "../ui/use-toast";
+import { useAuth, AuthContextProps } from "../providers/auth-provider";
 
 interface CategoryActionProps {
   initialData: Category;
@@ -25,9 +26,14 @@ interface CategoryActionProps {
 
 const CategoryAction = ({ initialData }: CategoryActionProps) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const { user } = useAuth() as AuthContextProps;
 
   const handleOnEdit = async (values: Category) => {
-    await updateCategoryById(initialData.$id, values)
+    await updateCategoryById(initialData.$id, {
+      ...values,
+      amount: +values.amount,
+      userId: user.$id,
+    })
       .then(() => {
         toast({
           description: "Updated category successfully",
